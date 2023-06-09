@@ -1,1 +1,5 @@
-# holbertonschool-system_algorithms
+# **holbertonschool-system_algorithms**
+
+## **Learnings in this repository**
+
+- Red-Black trees
