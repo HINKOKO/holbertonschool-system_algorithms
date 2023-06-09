@@ -10,7 +10,7 @@
  *
  * @RED: 0 -> Red node
  * @BLACK: 1 -> Black node
- * DOUBLE_BLACK - Double black node
+ * @DOUBLE_BLACK: Double black node
  */
 
 typedef enum rb_color_e
