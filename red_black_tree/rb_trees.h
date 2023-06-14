@@ -43,7 +43,17 @@ typedef struct rb_tree_s
 
 rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color);
 int rb_tree_is_valid(const rb_tree_t *tree);
+/* Insertion stuff */
 rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
+void rbt_right_rotate(rb_tree_t **tree, rb_tree_t *node);
+void rbt_left_rotate(rb_tree_t **tree, rb_tree_t *node);
+rb_tree_t *rbt_left_fix(rb_tree_t **tree, rb_tree_t *new);
+rb_tree_t *rbt_right_fix(rb_tree_t **tree, rb_tree_t *new);
+void rbt_fix(rb_tree_t **tree, rb_tree_t *new);
+rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
+/*****************************************************/
+/** End of insertion fixage **/
+
 rb_tree_t *array_to_rb_tree(int *array, size_t size);
 rb_tree_t *rb_tree_remove(rb_tree_t *root, int n);
 
