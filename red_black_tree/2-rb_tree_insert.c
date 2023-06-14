@@ -78,8 +78,6 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 			return (tmp->right = rb_tree_node(tmp, value, color));
 		}
 		else
-			goto out;
+			return (rb_tree_insert(&tmp->right, value));
 	}
-out:
-	return (rb_tree_insert(&tmp->right, value));
 }
