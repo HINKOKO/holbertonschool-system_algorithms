@@ -50,10 +50,12 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
 		return (*tree = rb_tree_node(NULL, value, BLACK));
 	if (tmp->color == RED)
 		color = BLACK;
-	color = RED;
+	else
+		color = RED;
 
 	if (tmp->n == value)
 		return (NULL);
+
 	if (tmp->n > value)
 	{
 		if (tmp->left == NULL)
