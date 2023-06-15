@@ -51,6 +51,7 @@ void rb_delete_fixup(rb_tree_t **tree, rb_tree_t *x)
 				w->color = BLACK;
 				x->parent->color = RED;
 				rbt_left_rotate(tree, x->parent);
+				w = x->parent->right;
 			}
 			if (w->left->color == BLACK && w->right->color == BLACK)
 			{
