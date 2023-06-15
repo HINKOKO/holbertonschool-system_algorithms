@@ -15,7 +15,8 @@ void rb_transplant(rb_tree_t **tree, rb_tree_t *u, rb_tree_t *v)
 		u->parent->left = v;
 	else
 		u->parent->right = v;
-	v->parent = u->parent;
+	if (v)
+		v->parent = u->parent;
 }
 /**
  * get_min - return the min of the BST subtree
@@ -153,6 +154,7 @@ void rbt_remove_node(rb_tree_t **tree, rb_tree_t *z)
 	}
 	if (y_color == BLACK)
 		rb_delete_fixup(tree, x);
+	free(z);
 }
 
 /**
