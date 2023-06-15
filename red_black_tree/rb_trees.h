@@ -54,7 +54,14 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value);
 /*****************************************************/
 /** End of insertion fixage **/
 
+/* Task 3 easy peasy */
 rb_tree_t *array_to_rb_tree(int *array, size_t size);
+
+/* about deletion NOT EASY */
 rb_tree_t *rb_tree_remove(rb_tree_t *root, int n);
+void rbt_remove_node(rb_tree_t **tree, rb_tree_t *z);
+void rb_delete_fixup(rb_tree_t **tree, rb_tree_t *x);
+rb_tree_t *get_min(rb_tree_t *x);
+void rb_transplant(rb_tree_t **tree, rb_tree_t *u, rb_tree_t *v);
 
 #endif /* __RBTREES__ */
