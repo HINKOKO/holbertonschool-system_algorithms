@@ -1,34 +1,34 @@
 #include "graphs.h"
 
-edge_t *connect_edge(vertex_t *start, vertex_t *dest);
+edge_t *connect_edge(vertex_t *start, vertex_t *end);
 
 /**
  * connect_edge - helper function to continue adding edge
  * after finding src and dest position
- * @start: the source vertex
- * @dest: the end vertex
+ * @start: the source vertex to connect from
+ * @end: the end vertex to connect to
  * Return: NULL if failure, success: pointer to new edge
 */
 
-edge_t *connect_edge(vertex_t *start, vertex_t *dest)
+edge_t *connect_edge(vertex_t *start, vertex_t *end)
 {
-	edge_t *new, *tmp = NULL;
+	edge_t *new = NULL, *tmp = NULL;
 
-	if (!start || !dest)
+	if (!start || !end)
 		return (NULL);
-
-	for (tmp = start->edges; tmp && tmp->next; tmp = tmp->next)
-		;
 	new = calloc(1, sizeof(edge_t));
 	if (!new)
 		return (NULL);
+	new->dest = end;
+	new->next = NULL;
+
+	for (tmp = start->edges; tmp && tmp->next; tmp = tmp->next)
+		;
 	/* we reach the end of LL of edges */
 	if (tmp)
 		tmp->next = new;
 	else
 		start->edges = new;
-	new->dest = dest;
-	new->next = NULL;
 	++start->nb_edges;
 
 	return (new);
@@ -48,9 +48,9 @@ edge_t *connect_edge(vertex_t *start, vertex_t *dest)
 int graph_add_edge(graph_t *graph, const char *src,
 	const char *dest, edge_type_t type)
 {
-	vertex_t *tmp, *start, *end = NULL;
+	vertex_t *tmp = NULL, *start = NULL, *end = NULL;
 
-	if (!graph || !src || !dest)
+	if (!graph || !src || !dest || type < 0 || type > 1)
 		return (0);
 	/* find src */
 	for (tmp = graph->vertices; tmp; tmp = tmp->next)
