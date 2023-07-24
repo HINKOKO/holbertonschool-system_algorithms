@@ -23,6 +23,8 @@
 **Directed** => directed graphs or 'di-graphs' are graphs which contains hence <i>directed edges</i>, meaning that all the edges have a specific direction
 (imagine a hell-city with only one way-streets).
 
+**Weighted** => We also can add a 'notion' of "weight" to the edges. Pursuing our analogy of city / roads and Blabla stuff, We can imagine to "weight" some certain roads regarding to their lenghts or periodic traffic jam... to specify that these "edges" are gonna cost us more time or money or anxiety or fish & chips ! 
+
 - ### **What are the most common ways used to represent graphs in C**
 
 There are different ways to represent a graph structure in C, the choice is situation-specific, and comes with its pros&cons, here are two standards methods:
@@ -73,4 +75,4 @@ copyright => <i>Alexandre Gautier</i>
 
 - ### **How to traverse a graph using DFS & BFS**
 
-Coming soon babies....
+Coming soon babies....we will visit all nodes in the graph 🚀
