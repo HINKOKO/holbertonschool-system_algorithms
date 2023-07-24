@@ -64,10 +64,10 @@ int graph_add_edge(graph_t *graph, const char *src,
 			end = tmp;
 	}
 	/* if either 'src' or 'dest' is not found, abort */
-	if (!start || !end ||
-		(type != UNIDIRECTIONAL && type != BIDIRECTIONAL) || !graph)
+	if (!start || !end)
 		return (0);
 	if (connect_edge(start, end, type) == -1)
 		return (0);
-	return (1);
+	else
+		return (1);
 }
