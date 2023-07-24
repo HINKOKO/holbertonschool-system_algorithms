@@ -15,6 +15,9 @@ int connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type)
 {
 	edge_t *new, *tmp = NULL;
 
+	if (!start || !dest)
+		return (-1);
+
 	for (tmp = start->edges; tmp && tmp->next; tmp = tmp->next)
 		;
 	new = calloc(1, sizeof(edge_t));
@@ -61,7 +64,8 @@ int graph_add_edge(graph_t *graph, const char *src,
 			end = tmp;
 	}
 	/* if either 'src' or 'dest' is not found, abort */
-	if (!start || !end)
+	if (!start || !end ||
+		(type != UNIDIRECTIONAL && type != BIDIRECTIONAL) || !graph)
 		return (0);
 	return (connect_edge(start, end, type));
 }
