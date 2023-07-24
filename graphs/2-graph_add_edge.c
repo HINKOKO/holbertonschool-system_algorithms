@@ -1,6 +1,6 @@
 #include "graphs.h"
 
-int connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type);
+edge_t *connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type);
 
 /**
  * connect_edge - helper function to continue adding edge
@@ -11,18 +11,18 @@ int connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type);
  * Return: NULL if failure, success: pointer to new edge
 */
 
-int connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type)
+edge_t *connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type)
 {
 	edge_t *new, *tmp = NULL;
 
 	if (!start || !dest)
-		return (-1);
+		return (NULL);
 
 	for (tmp = start->edges; tmp && tmp->next; tmp = tmp->next)
 		;
 	new = calloc(1, sizeof(edge_t));
 	if (!new)
-		return (-1);
+		return (NULL);
 	/* we reach the end of LL of edges */
 	if (tmp)
 		tmp->next = new;
@@ -34,7 +34,7 @@ int connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type)
 
 	if (type == BIDIRECTIONAL)
 		connect_edge(dest, start, UNIDIRECTIONAL);
-	return (1);
+	return (new);
 }
 
 /**
@@ -66,7 +66,7 @@ int graph_add_edge(graph_t *graph, const char *src,
 	/* if either 'src' or 'dest' is not found, abort */
 	if (!start || !end)
 		return (0);
-	if (connect_edge(start, end, type) == -1)
+	if (connect_edge(start, end, type) == NULL)
 		return (0);
 	else
 		return (1);
