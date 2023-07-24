@@ -50,7 +50,7 @@ int graph_add_edge(graph_t *graph, const char *src,
 {
 	vertex_t *tmp = NULL, *start = NULL, *end = NULL;
 
-	if (!graph || !src || !dest || type < 0 || type > 1)
+	if (!graph || !src || !dest)
 		return (0);
 	/* find src */
 	for (tmp = graph->vertices; tmp; tmp = tmp->next)
