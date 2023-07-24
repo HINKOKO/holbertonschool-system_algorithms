@@ -67,5 +67,7 @@ int graph_add_edge(graph_t *graph, const char *src,
 	if (!start || !end ||
 		(type != UNIDIRECTIONAL && type != BIDIRECTIONAL) || !graph)
 		return (0);
-	return (connect_edge(start, end, type));
+	if (connect_edge(start, end, type) == -1)
+		return (0);
+	return (1);
 }
