@@ -20,7 +20,7 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 			break;
 		vertex = vertex->next;
 	}
-	new = malloc(sizeof(vertex_t));
+	new = calloc(0, sizeof(vertex_t));
 	if (!new)
 		return (NULL);
 	new->content = strdup(str);
