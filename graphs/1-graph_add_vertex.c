@@ -30,7 +30,6 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 		return (NULL);
 	}
 	new->index = (graph->nb_vertices)++;
-	new->next = NULL;
 	/* if at least one vertex // else new becomes head */
 	if (vertex)
 		vertex->next = new;
