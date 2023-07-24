@@ -23,7 +23,14 @@
 **Directed** => directed graphs or 'di-graphs' are graphs which contains hence <i>directed edges</i>, meaning that all the edges have a specific direction
 (imagine a hell-city with only one way-streets).
 
-**Weighted** => We also can add a 'notion' of "weight" to the edges. Pursuing our analogy of city / roads and Blabla stuff, We can imagine to "weight" some certain roads regarding to their lenghts or periodic traffic jam... to specify that these "edges" are gonna cost us more time or money or anxiety or fish & chips ! 
+..................................
+<h6> Undirected Polymorphism </h6>
+We can always re-draw an <i>undirected graph</i> as <i>directed</i> -> for each undirected edge we will have 2 directed edges, but the opposite is false <br>
+.................................
+
+**Weighted** => We also can add a 'notion' of "weight" to the edges. Pursuing our analogy of city / roads and Blabla stuff, We can imagine to "weight" some certain roads regarding to their lenghts or periodic traffic jam... to specify that these "edges" are gonna cost us more time or money or anxiety or fish & chips ! USeful to pick the best path to reach destination.
+
+**Unweighted** => a cool graph with all edges having weight == 1 unit. Equality, fraternity, peace.
 
 - ### **What are the most common ways used to represent graphs in C**
 
