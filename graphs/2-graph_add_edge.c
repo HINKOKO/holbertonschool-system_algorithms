@@ -1,22 +1,18 @@
 #include "graphs.h"
 
-edge_t *connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type);
+edge_t *connect_edge(vertex_t *start, vertex_t *dest);
 
 /**
  * connect_edge - helper function to continue adding edge
  * after finding src and dest position
  * @start: the source vertex
  * @dest: the end vertex
- * @type: the type of edges to create
  * Return: NULL if failure, success: pointer to new edge
 */
 
-edge_t *connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type)
+edge_t *connect_edge(vertex_t *start, vertex_t *dest)
 {
 	edge_t *new, *tmp = NULL;
-
-	if (!start || !dest)
-		return (NULL);
 
 	for (tmp = start->edges; tmp && tmp->next; tmp = tmp->next)
 		;
@@ -32,8 +28,6 @@ edge_t *connect_edge(vertex_t *start, vertex_t *dest, edge_type_t type)
 	new->next = NULL;
 	++start->nb_edges;
 
-	if (type == BIDIRECTIONAL)
-		connect_edge(dest, start, UNIDIRECTIONAL);
 	return (new);
 }
 
@@ -66,8 +60,12 @@ int graph_add_edge(graph_t *graph, const char *src,
 	/* if either 'src' or 'dest' is not found, abort */
 	if (!start || !end)
 		return (0);
-	if (connect_edge(start, end, type) == NULL)
+	if (!connect_edge(start, end))
 		return (0);
-	else
-		return (1);
+	if (type == BIDIRECTIONAL)
+	{
+		if (!connect_edge(end, start))
+			return (0);
+	}
+	return (1);
 }
