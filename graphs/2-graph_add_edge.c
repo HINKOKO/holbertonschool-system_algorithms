@@ -14,6 +14,9 @@ edge_t *connect_edge(vertex_t *start, vertex_t *dest)
 {
 	edge_t *new, *tmp = NULL;
 
+	if (!start || !dest)
+		return (NULL);
+
 	for (tmp = start->edges; tmp && tmp->next; tmp = tmp->next)
 		;
 	new = calloc(1, sizeof(edge_t));
