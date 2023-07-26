@@ -24,6 +24,7 @@
 (imagine a hell-city with only one way-streets).
 
 ..................................
+
 <h6> Undirected Polymorphism </h6>
 We can always re-draw an <i>undirected graph</i> as <i>directed</i> -> for each undirected edge we will have 2 directed edges, but the opposite is false <br>
 .................................
@@ -37,19 +38,19 @@ We can always re-draw an <i>undirected graph</i> as <i>directed</i> -> for each 
 There are different ways to represent a graph structure in C, the choice is situation-specific, and comes with its pros&cons, here are two standards methods:
 
 - **Adjacency matrix**
- A 2D array that represents the graph by storing a '1' at position (i, j), if there's an edge from vertex i to j, and 0 otherwise. <br>
+  A 2D array that represents the graph by storing a '1' at position (i, j), if there's an edge from vertex i to j, and 0 otherwise. <br>
 
-  |            |   A  |  B  |  C  |  D  |
-  | -----------| ---- | ----| ----| ----|
-  |   A        |  0   |  1  |  1  |  0  |
-  |  B         |  1   |  0  |  0  |  1  |
-  |  C         |  1   |  0  |  0  |  0  |
-  |  D         |  0   |  1  |  1  |  0  |
+  |     | A   | B   | C   | D   |
+  | --- | --- | --- | --- | --- |
+  | A   | 0   | 1   | 1   | 0   |
+  | B   | 1   | 0   | 0   | 1   |
+  | C   | 1   | 0   | 0   | 0   |
+  | D   | 0   | 1   | 1   | 0   |
 
 In this matrix, we learn for example that the graph contains edges from A to B and A to C.
 
 - **Basic Adjacency list**
-Adjacency List is a simple way to represent a graph as a list of vertices, where each vertex has a list of its adjacent vertices. An example for an undirected graph with 4 vertices would give the following: <br>
+  Adjacency List is a simple way to represent a graph as a list of vertices, where each vertex has a list of its adjacent vertices. An example for an undirected graph with 4 vertices would give the following: <br>
 
 A: B D
 B: A C
@@ -79,7 +80,22 @@ The main layout/principle remains the same as **Basic Adjacency List** but inste
 
 copyright => <i>Alexandre Gautier</i>
 
-
 - ### **How to traverse a graph using DFS & BFS**
 
 Coming soon babies....we will visit all nodes in the graph 🚀
+
+- #### **DFS - Depth First Search Algorithm**
+
+Depth First Search or Depth First Traversal - "Traversal" means visiting all the vertices of a graph - is a recursive algorithm for searching all vertices & edges in a graph. In [Task 4](./4-depth_first_traverse.c), the purpose is to retrieve the <i>biggest vertex depth</i> we're basically looking for the biggest vertex depth, how deep can we go at max starting with a pointer to a graph. <br>
+<br>
+Time Complexity of **DFS** is represented as **0(|V| + |E|)** where **V** is the number of vertex, **E** the number of edges.<br>
+Space Complexity of this algorithm is **O(V)**
+
+<strong><u>Applications of DFS:</u></strong>
+
+- Finding the Path
+- Detecting cycle in a graph
+- Finding the strongly connected components of a graph
+- Test if it is a bipartite graph
+
+- #### **BFS - Breadth First Search Algorithm**
