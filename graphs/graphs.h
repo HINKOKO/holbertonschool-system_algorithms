@@ -26,7 +26,7 @@ typedef struct vertex_s vertex_t;
  * struct edge_s - Node in the linked list of edges for a given vertex
  * A single vertex can have many edges
  *
- * @dest: Pointer to the connected vertex
+ * @dest: Pointer to the connected vertex struct
  * @next: Pointer to the next edge
  */
 
@@ -51,7 +51,7 @@ typedef struct edge_s
  *
  * @next: Pointer to the next vertex in the adjacency linked list
  *   This pointer points to another vertex in the graph, but =>
- *    IT DO NOT STANT FOR AN EDGE BETWEEN TWO VERTICES
+ *    IT DO NOT STAND FOR AN EDGE BETWEEN TWO VERTICES
  */
 
 struct vertex_s
@@ -97,9 +97,8 @@ graph_t *graph_create(void);
 vertex_t *graph_add_vertex(graph_t *graph, const char *str);
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type);
 
-
 /* display the graph for being happy and compare Intranet output */
 void graph_display(const graph_t *graph);
-
+void graph_delete(graph_t *graph);
 
 #endif /* __HGRAPHS__*/
