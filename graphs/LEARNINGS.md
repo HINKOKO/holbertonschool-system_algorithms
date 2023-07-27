@@ -89,7 +89,9 @@ Coming soon babies....we will visit all nodes in the graph 🚀
 Depth First Search or Depth First Traversal - "Traversal" means visiting all the vertices of a graph - is a recursive algorithm for searching all vertices & edges in a graph. In [Task 4](./4-depth_first_traverse.c), the purpose is to retrieve the <i>biggest vertex depth</i> we're basically looking for the biggest vertex depth, how deep can we go at max starting with a pointer to a graph. <br>
 <br>
 Time Complexity of **DFS** is represented as **0(|V| + |E|)** where **V** is the number of vertex, **E** the number of edges.<br>
-Space Complexity of this algorithm is **O(V)**
+Space Complexity of this algorithm is **O(V)** <br>
+<br>
+The main trick is to keep track of each vertex we visit and mark them as <i>visited</i> we also record the deth as we can go deeper along the virgin vertex (<i>not visited yet I mean</i>) and return the max_depth we found at the end.
 
 <strong><u>Applications of DFS:</u></strong>
 
@@ -99,3 +101,39 @@ Space Complexity of this algorithm is **O(V)**
 - Test if it is a bipartite graph
 
 - #### **BFS - Breadth First Search Algorithm**
+
+Breadth-First Search , as the name suggests, search "wiiiiide" , whereas **DFS** is searching "deeeep". We explore all the "neighborings" nodes rather than looking to go as deep as we can right away, we go "layer-by-layer" through the graph, analyzing the vertices directly connected to the vertex we are starting from.<br>
+We fully explore edges out of the most recently discovered node that <i>still has unexplored edges leaving it</i> <br>
+<br>
+**[Standford lecture extract]**
+" **Breadth First Search** expands the frontier between discovered and undiscovered nodes uniformly accross the breadth of the frontier, discovering all nodes at a distance <i>k</i> from the source node before nodes at distance <i>k + 1</i> " <br>
+<br>
+There again, we keep track of vertex visited and mark them while avoiding cycles. <br>
+Note also the use of a **queue data structure** to store the vertices, we operates on the **FIFO** principle, so the node's neighbors will be viewed in the order in which it inserts them in the node.
+The time complexity is there again represented as **O(V + E)**, with space complexity of **O(V)** too.
+The pseudo-code shows the principle used:
+
+```
+BFS (Graph, startNode)
+  create an empty queue Q
+  push startNode into Q
+  mark startNode as 'visited'
+  while Q is not empty:
+    currentNode = pop from Q
+    visit currentNode //Process it, print it, pointer to (void)(*action) in this repo
+    for each neighborNode of currentNode:
+      if neighborNode is not visited:
+        mark it as visited
+        enqueue neighborNode into Q
+```
+
+<strong><u>Applications of BFS:</u></strong>
+
+- Build index by search index
+- For GPS navigation
+- Path finding algorithms
+- In the "Ford-Fulkerson" algorithm to find maximum flow in a network
+- In a peer-to-peer network, BFS can be used as traversal method to find all the **neighboring nodes**. <br>
+  Most torrent clients, employ this process to find "seeds" and "peers" in the network
+- Cycle detection in undirected graph
+- Minimum spanning tree

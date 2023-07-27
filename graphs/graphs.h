@@ -7,6 +7,19 @@
 #include <stdio.h>
 
 /**
+ * struct queue - struct for queueing neighbors
+ * of visited vertex and visit them/mark them
+ * @v: pointer to vertex struct we defined below
+ * @next: pointer to next patient vertex in the queue
+ */
+
+typedef struct queue_s
+{
+	struct vertex_s *v;
+	struct queue_s *next;
+} queue_t;
+
+/**
  * enum edge_type_e - Enumarates the different types of
  * connection between two vertices
  *
@@ -100,5 +113,10 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
 /* display the graph for being happy and compare Intranet output */
 void graph_display(const graph_t *graph);
 void graph_delete(graph_t *graph);
+
+/* search algorithms for graph */
+size_t depth_first_traverse(const graph_t *graph,
+							void (*action)(const vertex_t *v, size_t depth));
+size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 
 #endif /* __HGRAPHS__*/
