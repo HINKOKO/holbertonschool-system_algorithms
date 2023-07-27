@@ -56,6 +56,30 @@ vertex_t *pop(queue_t **head)
 size_t BFS_recurs(vertex_t *visit, int *visited,
 				  void (*action)(const vertex_t *v, size_t depth))
 {
+	/* pointer for visiting edges */
+	edge_t *ed = NULL;
+	/* for return value */
+	size_t max_breadth = 0;
+	/* init a queue */
+	queue_t *head = NULL, *tail = NULL;
+	if (!visit)
+		return (0);
+	/* mark current as visited, max is 1 when restart with another one */
+	visited[visit->index] = max_breadth = 1;
+	/* perform the call for each vertex to action */
+	action(visit, 0);
+	ed = visit->edges;
+	while (ed)
+	{
+		if (visited[ed->dest->index] != 1)
+			tail = push(&head, tail, ed->dest);
+		ed = ed->next;
+	}
+	for (ed = head->v->edges; ed; ed = ed->next)
+		;
+	head = action(pop(&head), ???);
+
+	GLARRRBARRRRWAKIYAAAAAAA
 }
 
 /**
