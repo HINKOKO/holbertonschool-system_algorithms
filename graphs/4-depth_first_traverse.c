@@ -58,7 +58,7 @@ size_t depth_first_traverse(const graph_t *graph,
 	/* to keep track of visited vertex */
 	if (!graph)
 		return (0);
-	marked = malloc(sizeof(*marked) * graph->nb_vertices);
+	marked = calloc(graph->nb_vertices, sizeof(*marked));
 	if (!marked)
 		return (0);
 
