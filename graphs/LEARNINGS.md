@@ -114,17 +114,19 @@ The time complexity is there again represented as **O(V + E)**, with space compl
 The pseudo-code shows the principle used:
 
 ```
-BFS (Graph, startNode)
-  create an empty queue Q
-  push startNode into Q
-  mark startNode as 'visited'
-  while Q is not empty:
-    currentNode = pop from Q
-    visit currentNode //Process it, print it, pointer to (void)(*action) in this repo
-    for each neighborNode of currentNode:
-      if neighborNode is not visited:
-        mark it as visited
-        enqueue neighborNode into Q
+BFS (rootNode of Graph)
+  create a queue
+  create list of visited node
+  mark root node as visited
+  enqueue that root node
+  while (queue is not empty)
+    x = queue.pop()
+    for (all immediate neighbors of x) {
+        if (not visited) {
+          enqueue
+          mark as visited
+        }
+    }
 ```
 
 <strong><u>Applications of BFS:</u></strong>

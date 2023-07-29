@@ -5,19 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
-/**
- * struct queue - struct for queueing neighbors
- * of visited vertex and visit them/mark them
- * @v: pointer to vertex struct we defined below
- * @next: pointer to next patient vertex in the queue
- */
-
-typedef struct queue_s
-{
-	struct vertex_s *v;
-	struct queue_s *next;
-} queue_t;
+#include <math.h>
 
 /**
  * enum edge_type_e - Enumarates the different types of
