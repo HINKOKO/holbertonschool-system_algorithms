@@ -20,7 +20,7 @@ size_t breadth_first_traverse(const graph_t *graph,
 		return (0);
 
 	mark = calloc(graph->nb_vertices, sizeof(char));
-	vrtx = calloc(graph->nb_vertices, sizeof(vertex_t *));
+	vrtx = calloc(graph->nb_vertices + 2, sizeof(vertex_t *));
 
 	vrtx[0] = graph->vertices;
 	mark[0] = 1;
