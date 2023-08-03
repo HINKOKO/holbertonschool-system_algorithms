@@ -47,5 +47,5 @@ size_t breadth_first_traverse(const graph_t *graph,
 		}
 	}
 	free(mark), free(vrtx);
-	return (depth);
+	return (depth - 1);
 }
