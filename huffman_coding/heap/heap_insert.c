@@ -37,12 +37,15 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	new_node = binary_tree_node(NULL, data);
 	if (!new_node)
 		return (NULL);
+	/* increment here */
+	++(heap->size);
 	
 
 	if (!heap->root)
 		return (heap->root = new_node);
 
 	_map = convert(heap->size, 2);
+	printf("%s", _map);
 	for (node = heap->root, i = 1; i < strlen(_map) - 1; i++)
 		node = _map[i] == '1' ? node->right : node->left;
 
@@ -59,6 +62,5 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 		node->parent->data = tmp;
 		node = node->parent;
 	}
-	++(heap->size);
 	return (new_node);
 }
