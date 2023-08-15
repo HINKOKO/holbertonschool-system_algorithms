@@ -8,18 +8,18 @@
  * Return: pointer to begining of bit string repr of heap->size
 */
 
-char *convert(size_t heapsize, size_t base)
+char *convert(long heapsize, long base)
 {
-	char *TOKENS = "01", *ptr;
-	char buffer[128];
-
+	char *TOKENS = "01", *ptr = NULL;
+	static char buffer[64];
 	ptr = &buffer[sizeof(buffer)];
 	*--ptr = 0;
 
 	do {
-		*--ptr = TOKENS[heapsize % base];
+		*--ptr = TOKENS[(heapsize % base)];
 		heapsize /= base;
 	} while (heapsize);
+	
 	return (ptr);
 }
 
@@ -33,8 +33,8 @@ char *convert(size_t heapsize, size_t base)
 
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
-	size_t i;
-	binary_tree_node_t *new, *node;
+	size_t i = 0;
+	binary_tree_node_t *new = NULL, *node = NULL;
 	void *tmp;
 	char *bitstr = NULL;
 
@@ -46,10 +46,10 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 		return (NULL);
 	/* increment here */
 	heap->size++;
+	bitstr = convert(heap->size, 2);
 
 	if (!heap->root)
 		return (heap->root = new);
-	bitstr = convert(heap->size, 2);
 	for (node = heap->root, i = 1; i < strlen(bitstr) - 1; i++)
 		node = bitstr[i] == '1' ? node->right : node->left;
 	if (bitstr[i] == '1')
@@ -63,6 +63,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 		tmp = node->parent->data;
 		node->parent->data = node->data;
 		node->data = tmp;
+		/* roll up */
 		node = node->parent;
 	}
 	return (new);
