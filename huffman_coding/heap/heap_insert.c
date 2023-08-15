@@ -50,7 +50,6 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	if (!heap->root)
 		return (heap->root = new);
 	bitstr = convert(heap->size, 2);
-	printf("The bit string is %s\n\n", bitstr);
 	for (node = heap->root, i = 1; i < strlen(bitstr) - 1; i++)
 		node = bitstr[i] == '1' ? node->right : node->left;
 	if (bitstr[i] == '1')
