@@ -12,6 +12,7 @@ char *convert(size_t heapsize, size_t base)
 {
 	char *TOKENS = "01", *ptr = NULL;
 	static char buffer[64];
+
 	ptr = &buffer[sizeof(buffer)];
 	*--ptr = 0;
 
@@ -19,7 +20,7 @@ char *convert(size_t heapsize, size_t base)
 		*--ptr = TOKENS[(heapsize % base)];
 		heapsize /= base;
 	} while (heapsize);
-	
+
 	return (ptr);
 }
 
