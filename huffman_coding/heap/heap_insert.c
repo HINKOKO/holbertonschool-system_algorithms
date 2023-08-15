@@ -8,7 +8,7 @@
  * Return: pointer to begining of bit string repr of heap->size
 */
 
-char *convert(long heapsize, long base)
+char *convert(size_t heapsize, size_t base)
 {
 	char *TOKENS = "01", *ptr = NULL;
 	static char buffer[64];
