@@ -40,10 +40,10 @@ void heapify_down(heap_t *heap)
 
 void *heap_extract(heap_t *heap)
 {
-	size_t i;
 	binary_tree_node_t *node = NULL;
 	void *data = NULL;
 	char *bitstr = NULL;
+	size_t i = 1;
 
 	if (!heap || !heap->root)
 		return (NULL);
@@ -57,6 +57,7 @@ void *heap_extract(heap_t *heap)
 		return (data);
 	}
 	bitstr = convert(heap->size, 2);
+
 	for (node = heap->root; i < strlen(bitstr); i++)
 		node = bitstr[i] == '1' ? node->right : node->left;
 
