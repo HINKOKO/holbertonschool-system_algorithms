@@ -11,25 +11,29 @@
 
 int huffman_extract_and_insert(heap_t *priority_queue)
 {
-	binary_tree_node_t *nest1 = NULL, *nest2 = NULL;
-	binary_tree_node_t *node = NULL, *pushback = NULL;
-	size_t freq = 0;
-	symbol_t *new_symbol = NULL;
+	binary_tree_node_t *node, *extract1, *extract2;
+	symbol_t *new;
+	size_t sum = 0;
 
-	if (!priority_queue)
+	if (!priority_queue || priority_queue->size < 2)
 		return (0);
 
-	/* pop the two least significant from min heap */
-	nest1 = heap_extract(priority_queue);
-	nest2 = heap_extract(priority_queue);
+	extract1 = heap_extract(priority_queue);
+	extract2 = heap_extract(priority_queue);
 
-	freq = ((symbol_t *)(nest1->data))->freq +
-		   ((symbol_t *)(nest2->data))->freq;
-	new_symbol = symbol_create('$', freq);
-	node = binary_tree_node(NULL, new_symbol);
-	pushback = heap_insert(priority_queue, node);
-	if (!pushback)
+	sum = ((symbol_t *)extract1->data)->freq;
+	sum += ((symbol_t *)extract2->data)->freq;
+
+	new = symbol_create('$', sum);
+	if (!new)
 		return (0);
-	--(priority_queue->size);
-	return (1);
+	extract1->parent = extract2->parent = node = binary_tree_node(NULL, new);
+	if (!node)
+	{
+		free(new);
+		return (0);
+	}
+	node->left = extract1;
+	node->right = extract2;
+	return (heap_insert(priority_queue, node) != NULL);
 }
