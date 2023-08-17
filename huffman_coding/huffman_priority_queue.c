@@ -49,6 +49,8 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 		nested = binary_tree_node(NULL, herz);
 		/* insert them in min heap */
 		node = heap_insert(huff_heap, nested);
+		if (!node)
+			return (NULL);
 	}
 	return (huff_heap);
 }
