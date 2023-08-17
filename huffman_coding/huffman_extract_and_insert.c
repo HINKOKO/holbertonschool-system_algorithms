@@ -30,5 +30,6 @@ int huffman_extract_and_insert(heap_t *priority_queue)
 	pushback = heap_insert(priority_queue, node);
 	if (!pushback)
 		return (0);
+	--(priority_queue->size);
 	return (1);
 }
