@@ -1,29 +1,62 @@
 #include "heap.h"
 
-/**
- * convert - build the "01" representation of heapsize
- * bit_string in reverse to have it directly in correct-order
- * @heapsize: the heap_size to convert
- * @base: the base to convert to (binary only available here in TOKENS)
- * Return: pointer to begining of bit string repr of heap->size
-*/
-
-char *convert(size_t heapsize, size_t base)
+binary_tree_node_t *swap_nodes(binary_tree_node_t *a, binary_tree_node_t *b)
 {
-	char *TOKENS = "01", *ptr = NULL;
-	static char buffer[64];
+	void *tmp;
 
-	ptr = &buffer[sizeof(buffer)];
-	*--ptr = 0;
+	tmp = b->data;
+	b->data = a->data;
+	a->data = tmp;
+	a = b;
 
-	do {
-		*--ptr = TOKENS[(heapsize % base)];
-		heapsize /= base;
-	} while (heapsize);
-
-	return (ptr);
+	return (a);
 }
 
+binary_tree_node_t *heapify_up(int (*data_cmp)(void *, void *), binary_tree_node_t *node)
+{
+	if (!data_cmp || !node)
+		return (NULL);
+	while (node->parent && data_cmp(node->data, node->parent->data) < 0)
+		node = swap_nodes(node, node->parent);
+	return (node);
+}
+
+binary_tree_node_t *ith_node(binary_tree_node_t *root, const size_t i)
+{
+	size_t b = i;
+
+	if (!root || i < 1)
+		return (NULL);
+
+	if (i == 1)
+		return (root);
+
+	/* find the binary logarithm closest to size*/
+	while (b & (b - 1))
+		b &= (b - 1);
+
+	/* ignore highest binary digit */
+	b >>= 1;
+
+	/* walk down the tree as directed by b roadmap*/
+	while (b)
+	{
+		if (i & b)
+			if (root->right)
+				root = root->right;
+			else
+				break;
+		else
+		{
+			if (root->left)
+				root = root->left;
+			else
+				break;
+		}
+		b >>= 1;
+	}
+	return (root);
+}
 
 /**
  * heap_insert - inserts a value in a Min heap
@@ -34,38 +67,26 @@ char *convert(size_t heapsize, size_t base)
 
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
-	size_t i = 0;
-	binary_tree_node_t *new = NULL, *node = NULL;
-	void *tmp;
-	char *bitstr = NULL;
+	binary_tree_node_t *new = NULL;
 
-	if (!heap)
+	if (!heap || !data)
 		return (NULL);
-
-	new = binary_tree_node(NULL, data);
-	if (!new)
-		return (NULL);
-	/* increment here */
-	heap->size++;
-	bitstr = convert(heap->size, 2);
 
 	if (!heap->root)
-		return (heap->root = new);
-	for (node = heap->root, i = 1; i < strlen(bitstr) - 1; i++)
-		node = bitstr[i] == '1' ? node->right : node->left;
-	if (bitstr[i] == '1')
-		node->right = new;
-	else
-		node->left = new;
-	new->parent = node;
-	node = new;
-	while (node->parent && heap->data_cmp(node->parent->data, node->data) > 0)
 	{
-		tmp = node->parent->data;
-		node->parent->data = node->data;
-		node->data = tmp;
-		/* roll up */
-		node = node->parent;
+		heap->root = new = binary_tree_node(NULL, data);
+		if (!new)
+			return (NULL);
+		heap->size++;
 	}
-	return (new);
+	else
+	{
+		new = ith_node(heap->root, ++heap->size);
+		if (!new->left)
+			new = new->left = binary_tree_node(new, data);
+		else
+			new = new->right = binary_tree_node(new, data);
+	}
+
+	return (heapify_up(heap->data_cmp, new));
 }
