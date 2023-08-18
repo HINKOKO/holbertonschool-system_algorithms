@@ -1,25 +1,38 @@
 #include "heap.h"
 
-binary_tree_node_t *swap_nodes(binary_tree_node_t *a, binary_tree_node_t *b)
+/**
+ * heapify_up - fix the heap property after insertion
+ * @data_cmp: pointer to comparison function (in 2-main)
+ * @node: the node to compare to its parent (the one we inserted)
+ * Return: pointer to inserted & fixed position node
+ */
+
+binary_tree_node_t *heapify_up(int (*data_cmp)(void *, void *),
+							   binary_tree_node_t *node)
 {
 	void *tmp;
 
-	tmp = b->data;
-	b->data = a->data;
-	a->data = tmp;
-	a = b;
-
-	return (a);
-}
-
-binary_tree_node_t *heapify_up(int (*data_cmp)(void *, void *), binary_tree_node_t *node)
-{
 	if (!data_cmp || !node)
 		return (NULL);
 	while (node->parent && data_cmp(node->data, node->parent->data) < 0)
-		node = swap_nodes(node, node->parent);
+	{
+		tmp = node->data;
+		node->data = node->parent->data;
+		node->parent->data = tmp;
+
+		node = node->parent;
+	}
 	return (node);
 }
+
+/**
+ * ith_node - find the proper next available position
+ * in the heap , first step to keep the BT Complete BT,
+ * then fixed by heapify_up
+ * @root: pointer to root node of heap
+ * @i: size of the heap
+ * Return: location of inserted node
+ */
 
 binary_tree_node_t *ith_node(binary_tree_node_t *root, const size_t i)
 {
