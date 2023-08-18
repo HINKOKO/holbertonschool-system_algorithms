@@ -1,6 +1,27 @@
 #include "heap.h"
 
 /**
+ * convert - converts a heapsize to its bit string map
+ * @heapsize: size of the heap to build the string map of
+ * @base: binary base for us
+ * Return: pointer to beginning of the string
+*/
+
+char *convert(size_t heapsize, size_t base)
+{
+	char *TOKENS = "01", *ptr = NULL;
+	static char buff[64];
+
+	ptr = &buff[sizeof(buff)];
+	*--ptr = 0;
+	do {
+		*--ptr = TOKENS[(heapsize % base)];
+		heapsize /= base;
+	} while (heapsize);
+	return (ptr);
+}
+
+/**
  * heapify_down - restores the heap by sinking it down
  * after finding the last level order node in heap_extract()
  * @heap: pointer to heap to fix property of
@@ -58,10 +79,14 @@ void *heap_extract(heap_t *heap)
 	}
 	bitstr = convert(heap->size, 2);
 
+	/* boom ! find the last level order node */
+
 	for (node = heap->root; i < strlen(bitstr); i++)
 		node = bitstr[i] == '1' ? node->right : node->left;
 
+	/* throw that data of this node to be the new root */
 	heap->root->data = node->data;
+	/* free this place */
 	if (node->parent->left == node)
 		node->parent->left = NULL;
 	else
@@ -70,6 +95,7 @@ void *heap_extract(heap_t *heap)
 	/* liberate the last level order found */
 	free(node);
 	--(heap->size);
+	/* fix the mess */
 	heapify_down(heap);
 	return (data);
 }
