@@ -5,7 +5,7 @@
  * @heapsize: size of the heap to build the string map of
  * @base: binary base for us
  * Return: pointer to beginning of the string
-*/
+ */
 
 char *convert(size_t heapsize, size_t base)
 {
@@ -14,7 +14,8 @@ char *convert(size_t heapsize, size_t base)
 
 	ptr = &buff[sizeof(buff)];
 	*--ptr = 0;
-	do {
+	do
+	{
 		*--ptr = TOKENS[(heapsize % base)];
 		heapsize /= base;
 	} while (heapsize);
@@ -43,7 +44,7 @@ void heapify_down(heap_t *heap)
 			child = (heap->data_cmp(node->left->data, node->right->data) <= 0
 						 ? node->left
 						 : node->right);
-		if (heap->data_cmp(node->data, child->data) <= 0)
+		if (heap->data_cmp(node->data, child->data) < 0)
 			break;
 		tmp = node->data;
 		node->data = child->data;
