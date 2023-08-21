@@ -14,8 +14,7 @@ char *convert(size_t heapsize, size_t base)
 
 	ptr = &buff[sizeof(buff)];
 	*--ptr = 0;
-	do
-	{
+	do {
 		*--ptr = TOKENS[(heapsize % base)];
 		heapsize /= base;
 	} while (heapsize);
