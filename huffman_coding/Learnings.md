@@ -38,6 +38,9 @@ For example, to insert an element into a min-heap, the element is added to the e
   ##### - **What is a Huffman code**
 
   Huffman code is a famous **greedy algorithm** and its a particular kind of **optimal prefix code** used for lossless data compression <br>
+  The main idea behind terrifying **Huffman Coding** concept, is that symbols that appears the more often will be encoded as shorter-bit strings while symbols that appears the less will be encoded as longer-bits strings. <br>
+  Beware ! symbols/characters frequencies varies from one message to another, there is no Huffman coding that will work for all messages ! There is an algorithm for generating the Huffman code for a given message, which can be then used to decode only the same message. <br>
+  Basic idea of the algorithm is to use a **frequency-sorted Binary tree** <br>
 
   ##### **Optimal prefix code ?**
 
