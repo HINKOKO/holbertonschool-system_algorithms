@@ -13,7 +13,11 @@ At [Holberton School](https://www.holbertonschool.fr/programmes/blockchain), in 
 
 In this repository, you'll find folders about Red-Black trees (only this one so far), N-ary trees, Graphs and Blockchain.
 
+- Red Black Trees:
+
+
 
 ## **About me**
 
 Started retraining in May 2022 with Holberton School, after 14 years as a construction worker ! I quickly became passionate about computer science, and aimed at pursuing the fundamentals with a Low Level Specialization, because my curiosity is endless and that Low-Level path gives us a real insight into the bare-bones of advanced Algorithms and Linux inner workings.
+Thanks !
