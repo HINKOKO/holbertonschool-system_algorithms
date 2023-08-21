@@ -2,9 +2,10 @@
 
 ## **Learnings of project**
 
-- **What is a binary Heap (min & max)**
+- ### **What is a binary Heap (min & max)**
 
-  A binary-Heap is a specialized binary-tree-based data structure that fullfil the **heap property** => which can be **max** or **min** (The **heap-property** dictates the relationship berween parent and child nodes in the heap). <br>
+  A binary heap is a tree-based data structure in which each node has at most two children and satisfies the **heap property**. <br>
+  The **heap-property** requires that for a min-heap, the value of each node is greater than or equal to the values of its childrens nodes, and thus for a max-heap, the value of each node is less than or equal to the values of its children nodes.
 
   Binary Heaps are a common way to implement **priority queues** <br>
   A binary heap, let's say that again, is created as a binary tree but with two additional constraints:
@@ -22,14 +23,39 @@
 
 <img src="./img/HeapArray.png">
 
-- What is a priority queue
+Inserting an element into a binary heap involves adding the element to the end of the aray and then **re-ordering** the elements to satisfy the **heap property**. <br>
+For example, to insert an element into a min-heap, the element is added to the end of the array, and then it is compared to its parent node, if smaller, it is swapped , and this process continues until heap property is satisfied. <br>
+=> restoring heap property by comparing and possibly swap with parent node, is called <i>up-heap</i> operation ( also known as <i>bubble-up, sift-up, hepify-up</i>)
 
-- What is a Huffman code
+- ### **What is a priority queue**
 
-- **Compilation trick (I'm still a baby)**
+  Priority queue is a data structure for storing a collection of elements, each one with an associated **priority** ( or a value if you prefer), that priority queue allows you to insert elements with their associated **priority**, and provides efficient methods to extract element with highest (or lowest) priority.
 
-- Flags -Iheap/ and -I/
-  => -Iheap/ => This tells the compiler to include the directory named "heap/" in its research path for header files.
-  => -I./ tells the compiler to include the current directory also in its search path for header files
+  The **binary heap**, can be used to implement such a priority queue (exactly what we do in this project)
+
+  To recap => a priority queue is an abstract concept that defines the behavior of storing/retrieving elements based on their priorities, while a heap is a 'concrete' implementation of a priority queue that uses a binary tree structure and maintains the heap property to efficiently manage that concept of element's priorities.
+
+  ##### - **What is a Huffman code**
+
+  Huffman code is a famous **greedy algorithm** and its a particular kind of **optimal prefix code** used for lossless data compression <br>
+
+  ##### **Optimal prefix code ?**
+
+  You certainly know ASCII or ANSI table, which are like "maps" where each character are mapped to a particular byte. <br>
+  When you get a file in ANSI encoding, you know you have to read sets of 8 bits at a time and translate byte into characters. <br>
+  Giving the **same number of bits** to represent each character simplifies decoding since we only need to read fix numbers of bits for translation, but it is **not optimal from size perspective** as => <i>often used characters get the "same" representation as rarely used characters </i> <br>
+
+  That's why some encoding techniques uses a map-system where characters are mapped to bits of different sizes, More often characters are mapped to a smaller bits-code. WHen more often characters are mapped to shorter bits, you expect to encode the file with less space than classic encoding like ANSI/ASCII <br>
+  Clever, smart, bravo ! but it comes with a challenge , how to know then where is the **marker, delimiter** how do you where a character begins/ends ? should I stop or should I go on ? <br>
+
+  => One solution is to use a Binary Tree like the **Huffman Tree !**
+
+<br><br>
+
+- **Compilation trick**
+
+Flags -Iheap/ and -I/
+=> -Iheap/ => This tells the compiler to include the directory named "heap/" in its research path for header files.
+=> -I./ tells the compiler to include the current directory also in its search path for header files
 
 Both of flags used to ensure that compiler finds the necessary header files for our source code, regardless of their relative locations.
