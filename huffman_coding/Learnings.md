@@ -42,6 +42,8 @@ For example, to insert an element into a min-heap, the element is added to the e
   Beware ! symbols/characters frequencies varies from one message to another, there is no Huffman coding that will work for all messages ! There is an algorithm for generating the Huffman code for a given message, which can be then used to decode only the same message. <br>
   Basic idea of the algorithm is to use a **frequency-sorted Binary tree** <br>
 
+  **Must Know** => Huffman coding is a variable-length prefix coding algorithm, that assigns shorter bit-codes to more frequent characters, and longer bit-codes to less frequent characters
+
   ##### **Optimal prefix code ?**
 
   You certainly know ASCII or ANSI table, which are like "maps" where each character are mapped to a particular byte. <br>
