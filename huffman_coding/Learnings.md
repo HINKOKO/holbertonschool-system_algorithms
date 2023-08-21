@@ -2,7 +2,7 @@
 
 ## **Learnings of project**
 
-- ### **What is a binary Heap (min & max)**
+- ### <div id=1>**What is a binary Heap (min & max)**</div>
 
   A binary heap is a tree-based data structure in which each node has at most two children and satisfies the **heap property**. <br>
   The **heap-property** requires that for a min-heap, the value of each node is greater than or equal to the values of its childrens nodes, and thus for a max-heap, the value of each node is less than or equal to the values of its children nodes.
@@ -27,7 +27,7 @@ Inserting an element into a binary heap involves adding the element to the end o
 For example, to insert an element into a min-heap, the element is added to the end of the array, and then it is compared to its parent node, if smaller, it is swapped , and this process continues until heap property is satisfied. <br>
 => restoring heap property by comparing and possibly swap with parent node, is called <i>up-heap</i> operation ( also known as <i>bubble-up, sift-up, hepify-up</i>)
 
-- ### **What is a priority queue**
+- ### <div id=2>**What is a priority queue**</div>
 
   Priority queue is a data structure for storing a collection of elements, each one with an associated **priority** ( or a value if you prefer), that priority queue allows you to insert elements with their associated **priority**, and provides efficient methods to extract element with highest (or lowest) priority.
 
@@ -35,7 +35,7 @@ For example, to insert an element into a min-heap, the element is added to the e
 
   To recap => a priority queue is an abstract concept that defines the behavior of storing/retrieving elements based on their priorities, while a heap is a 'concrete' implementation of a priority queue that uses a binary tree structure and maintains the heap property to efficiently manage that concept of element's priorities.
 
-  ##### - **What is a Huffman code**
+  ### <div id=3> **What is a Huffman code** </div>
 
   Huffman code is a famous **greedy algorithm** and its a particular kind of **optimal prefix code** used for lossless data compression <br>
   The main idea behind terrifying **Huffman Coding** concept, is that symbols that appears the more often will be encoded as shorter-bit strings while symbols that appears the less will be encoded as longer-bits strings. <br>
