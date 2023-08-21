@@ -15,7 +15,7 @@ void print_codes(binary_tree_node_t *root, size_t pathlocation)
 
 	symbol = root->data;
 	/* we reached a leaf */
-	if (symbol->data != -1)
+	if (symbol->data != '$')
 		printf("%c: %s\n", symbol->data, convert(pathlocation, 2) + 1);
 	else
 	/* recursive call to go down the tree */
