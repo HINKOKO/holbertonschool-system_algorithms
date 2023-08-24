@@ -39,7 +39,8 @@ For example, to insert an element into a min-heap, the element is added to the e
   ### <div id=3> **What is a Huffman code** </div>
 
   Huffman code is a famous **greedy algorithm** and its a particular kind of **optimal prefix code** used for lossless data compression <br>
-  The main idea behind terrifying **Huffman Coding** concept, is that symbols that appears the more often will be encoded as shorter-bit strings while symbols that appears the less will be encoded as longer-bits strings. <br>
+  The main idea behind terrifying **Huffman Coding** concept, is that symbols that appears the more **often** will be encoded as **shorter-bit strings** while symbols that appears the **less** will be encoded as **longer-bits strings.** <br>
+  <br>
   Beware ! symbols/characters frequencies varies from one message to another, there is no Huffman coding that will work for all messages ! There is an algorithm for generating the Huffman code for a given message, which can be then used to decode only the same message. <br>
   Basic idea of the algorithm is to use a **frequency-sorted Binary tree** <br>
 
@@ -55,6 +56,25 @@ For example, to insert an element into a min-heap, the element is added to the e
   Clever, smart, bravo ! but it comes with a challenge , how to know then where is the **marker, delimiter** how do you where a character begins/ends ? should I stop or should I go on ? <br>
 
   => One solution is to use a Binary Tree like the **Huffman Tree !**
+
+  #### **Building the Huffman Tree**
+
+  Main algorithm idea is as follow:
+
+  - Scan your data and computes the frequency of occurence of each different byte character.
+
+  - Insert them as nodes (symbol->data for byte character / symbol->freq for character frequencies) into a reverse priority queue <br>
+    based on frequencies, the lowest frequency is given the highest priority.
+
+  - Start a loop until the queue is empty.
+
+  - Remove two nodes from the priority queue & combine them into an internal node with frequency = sum of the two nodes frequencies.
+
+  - Insert the 2 nodes removed from the queue as respectively left & right child of created internal node.
+
+  - Insert created internal node back into the queue.
+
+  - The last remaining node on queue is the root of the Huffman Tree.
 
 <br><br>
 
