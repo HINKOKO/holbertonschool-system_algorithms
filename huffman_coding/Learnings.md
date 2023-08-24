@@ -5,14 +5,15 @@
 - ### <div id=1>**What is a binary Heap (min & max)**</div>
 
   A binary heap is a tree-based data structure in which each node has at most two children and satisfies the **heap property**. <br>
-  The **heap-property** requires that for a min-heap, the value of each node is greater than or equal to the values of its childrens nodes, and thus for a max-heap, the value of each node is less than or equal to the values of its children nodes.
+  The **heap-property** requires that for a min-heap, the value of each node is greater than or equal to the values of its parent node (with minimum value at the root), and thus for a max-heap, the value of each node is less than or equal to the value of its parent node (max value at the root node).
 
   Binary Heaps are a common way to implement **priority queues** <br>
-  A binary heap, let's say that again, is created as a binary tree but with two additional constraints:
+
+  <u>A binary heap, let's say that again, is created as a binary tree but with two additional constraints:</u>
 
   - **Shape Property**: A binary heap is a <i>complete binary-tree</i>, that is, all levels of the tree, except possibly the last one are fully filled, and, if the last level of tree is not complete, the nodes of that level are filled from left to right
 
-  - **Heap property**: The key stored in each node is either greater than or equal to // or less than or equal to the key's in the node's children. (Either a max or min-heap respectively)
+  - **Heap property**: The key stored in each node is either greater than or equal to // or less than or equal to the key's in the node's children. (Either a max or min-heap respectively).
 
   The Heap is often implemented with an Array. Any binary tree can be stored in an array, but because binary heap is always a <i>complete binary tree</i>, it can be stored compactly, the parent and children of each node can be then found by arithmetic on array indices:
   Let N be the number of elements in the heap, and <i>i</i> an arbitraty (valid) index (between 0 and N - 1), then we can say for a given element <i>a</i> at index <i>i</i>:
