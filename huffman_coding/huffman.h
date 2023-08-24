@@ -18,6 +18,20 @@ typedef struct symbol_s
 	size_t freq;
 } symbol_t;
 
+/**
+ * char_freq_s - struct for storing char frequencies
+ * counting chars and associated frequencies
+ *
+ *
+ */
+
+typedef struct char_freq_s
+{
+	char *data;
+	size_t *freq;
+	size_t size;
+} char_t;
+
 /* functions stuff */
 symbol_t *symbol_create(char data, size_t freq);
 heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
