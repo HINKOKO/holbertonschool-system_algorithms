@@ -39,16 +39,20 @@ char_t *count_symbols(const char *inputfile)
 
 int compress(const char *input_file, const char *output_file)
 {
-	int ret = EXIT_SUCCESS;
-	// unsigned char buff[BUFSIZ];
-	// binary_tree_node_t *root = NULL;
+	int i, ret = EXIT_SUCCESS;
 	char_t *frequencies = NULL;
+	FILE *new;
 
 	frequencies = count_symbols(input_file);
 
 	ret = huffman_codes(frequencies->data, frequencies->freq, frequencies->size);
 	if (ret)
-		printf("I'm done!");
+		new = fopen(output_file, "w");
+	if (!new)
+		return (EXIT_FAILURE);
+
+	for (i = 0; i < 127; i++)
+		fprintf(new, "%d", ret);
 
 	return (0);
 }
