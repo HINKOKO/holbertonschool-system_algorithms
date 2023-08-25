@@ -285,7 +285,6 @@ int main(int argc, char **argv)
 	char fname[100];		/* what to call output file */
 
 	int mode = check(argc, argv);
-	printf("%d\n", mode);
 	if (mode < 0)
 		exit(EXIT_FAILURE);
 
@@ -331,6 +330,5 @@ int main(int argc, char **argv)
 	fclose(f);
 	fclose(g);
 	/* brag */
-	printf("tada ! \n");
 	exit(0);
 }
