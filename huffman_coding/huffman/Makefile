@@ -1,8 +1,10 @@
 CC:=gcc
 FLAGS:=-Wall -Werror -pedantic -Iheap/ -I./ 
-SRC:= ../heap/*.c ../*.c
-MAIN:= ./huffman_driver.c
+SRC:= ./huffman_driver.c
 NAME:=huffman
 
 all:
-	$(CC) $(FLAGS) $(SRC) $(MAIN) -o $(NAME)
+	$(CC) $(FLAGS) $(SRC) -o $(NAME)
+
+clean:
+	find -type f -executable -delete
