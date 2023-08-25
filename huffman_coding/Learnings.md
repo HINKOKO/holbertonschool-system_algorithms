@@ -5,13 +5,13 @@
 - ### <div id=1>**What is a binary Heap (min & max)**</div>
 
   A binary heap is a tree-based data structure in which each node has at most two children and satisfies the **heap property**. <br>
-  The **heap-property** requires that for a min-heap, the value of each node is greater than or equal to the values of its parent node (with minimum value at the root), and thus for a max-heap, the value of each node is less than or equal to the value of its parent node (max value at the root node).
+  The **heap-property** requires that for a min-heap, the value of each node is greater than or equal to the value of its parent node (with minimum value at the root), and thus for a max-heap, the value of each node is less than or equal to the value of its parent node (max value at the root node).
 
   Binary Heaps are a common way to implement **priority queues** <br>
 
   <u>A binary heap, let's say that again, is created as a binary tree but with two additional constraints:</u>
 
-  - **Shape Property**: A binary heap is a <i>complete binary-tree</i>, that is, all levels of the tree, except possibly the last one are fully filled, and, if the last level of tree is not complete, the nodes of that level are filled from left to right
+  - **Shape Property**: A binary heap is a <i>complete binary-tree</i>, that is, all levels of the tree, except possibly the last one are fully filled, and, if the last level of tree is not complete, the nodes of that level are filled **from left to right**
 
   - **Heap property**: The key stored in each node is either greater than or equal to // or less than or equal to the key's in the node's children. (Either a max or min-heap respectively).
 
@@ -76,7 +76,52 @@ For example, to insert an element into a min-heap, the element is added to the e
 
   - The last remaining node on queue is the root of the Huffman Tree.
 
+  - **In the Huffman Tree , we assign each left-edges a '0' - code, and each right-edges a '1' - code, that "trick" will then gives us the variable-encoding bits for each character stored at leaf nodes**
+
 <br><br>
+
+##### **Towards a Huffman Tree**
+
+Given the string "go go gophers", the classic ASCII encoding requires 13 (characters) \* 8 (bits) = 104 bits.
+Let's see if we can improve that....
+First, we notice there is only 8 differents characters in the string "go go gophers", after building our Huffman Tree, all those characters will be stored as **leaves** of that Tree. How to give birth to that Tree ? <br>
+
+We start with a forest of baby nodes, each one being a node storing a character with its associated frequency:
+
+<img src="./img/priorq1.jpg" alt="forestbabby" />
+
+We pick two minimals nodes, here there are five "minimal" nodes with a frequency of **1**. (Notice we ordered our nodes in the order of a **reverse-priority queue**, the fewer the frequency, the highest the priority). <br>
+With that two picked nodes, we create a new node with a frequency made of the sum of the picked nodes from the priority queue. The first picked becomes the left child of the new one, the second picked becomes the right child. Repeat this step until queue is empty, the steps are shown below:
+
+<img src="./img/priorq2.jpg" alt="forestbabby" />
+<br><br>
+<img src="./img/priorq3.jpg" alt="forestbabby" />
+<br><br>
+<img src="./img/priorq4.jpg" alt="forestbabby" />
+<br><br>
+Brrrr that tree is growing!!!
+<br><br>
+We complete the connection, assign each left edges a '0'path-code and each right edges a '1' path-code , which gives that final beauty:
+<br><br>
+<br><br>
+<img src="./img/finaltree.jpg" alt="forestbabby" />
+<br><br>
+<br><br>
+From the tree, we can now retrieve the following coding table for the characters:
+
+| character | Binary code |
+| :-------: | :---------: |
+|     g     |     00      |
+|     o     |     01      |
+|     s     |     100     |
+|  "space"  |     101     |
+|     e     |    1100     |
+|     h     |    1101     |
+|     p     |    1110     |
+|     r     |    1111     |
+
+<br>
+We clearly that our most frequent character 'g' for example gets a shorter bit-string code. This table shows that writing "go go gophers" would require a total of **37 bits**, rather than **104 bits** with classic ASCII, saving around 60% of storage, without loosing any data/character. COngrats Sir Huffman
 
 - **Compilation trick**
 
