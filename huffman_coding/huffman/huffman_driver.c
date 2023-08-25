@@ -261,7 +261,7 @@ void encode_file(FILE *infile, FILE *outfile, char *codes[])
 int check(int argc, char *argv[])
 {
 	if (argc != 4 || strlen(argv[1]) != 1 ||
-		!strcmp(argv[1], "c"))
+		strcmp(argv[1], "c"))
 		return (fprintf(stderr, "Usage: huffman <mode> <filename> <out_filename>\n"), EXIT_FAILURE);
 
 	if (access(argv[2], F_OK) == -1)
