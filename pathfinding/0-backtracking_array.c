@@ -1,47 +1,65 @@
 #include "pathfinding.h"
+/* malloc calloc free */
+#include <stdlib.h>
+/* printf */
+#include <stdio.h>
 
-int is_valid(queue_t *path, char **map, char **visited, int rows, int cols, const point_t *next)
+/**
+ * valid_move - validates next possible step in a maze map grid
+ *
+ * @path: queue of nodes visited, represents current candidate solution
+ * @map: pointer to a read-only two-dimensional array (0 represents a
+ *   walkable cell, 1 represents a blocked cell)
+ * @visited: pointer to a two-dimensional array recording which coordinate
+ *   postions have already been visited
+ * @rows: count of rows in map
+ * @cols: count of columns in map
+ * @step: coordinates of potential next map cell
+ * Return: 1 if step is valid, 0 if not or failure
+ */
+int valid_move(queue_t *path, char **map, char **visited, int rows,
+			   int cols, const point_t *step)
 {
-	if (!path || !map || !visited || !rows || !cols || !next)
+	if (!path || !map || !visited || !rows || !cols || !step)
 		return (0);
 
-	if (!((next->x >= 0 && next->x < cols) && (next->y >= 0 && next->y < rows)))
+	if (!((step->x >= 0 && step->x < cols) &&
+		  (step->y >= 0 && step->y < rows)))
 		return (0);
 
-	if (map[next->x][next->y] == '1')
+	if (map[step->y][step->x] == '1')
 		return (0);
 
-	/* step in a visited cell ? */
-	if (visited[next->y][next->x])
+	if (visited[step->y][step->x])
 		return (0);
 
 	return (1);
 }
 
 /**
- * add_point - adds a point_t point to the queue that represent
- * first path found by backtracking trick
+ * addPointToPath - adds a map point in a 2D grid to the queue representing
+ *   the first backtracking solution found in RDLU order; expects to build
+ *   path from target to origin
  *
- * @path: queue of nodes already visited
- * @current: current (valid) point we wanna add
- * Return: 1 for success, 0 for failure
+ * @path: queue of nodes visited, represents current candidate solution
+ * @curr: coordinates of current map cell
+ * Return: 1 on success, 0 on failure
  */
-
-int add_point(queue_t *path, const point_t *current)
+int addPointToPath(queue_t *path, const point_t *curr)
 {
 	point_t *new = NULL;
 
-	/* sanity check */
-	if (!path || !current)
+	if (!path || !curr)
 		return (0);
 
 	new = malloc(sizeof(point_t));
 	if (!new)
 		return (0);
 
-	new->x = current->x, new->y = current->y;
+	new->x = curr->x;
+	new->y = curr->y;
 
-	if (!queue_push_front(path, (void *)current))
+	if (!queue_push_front(path, (void *)new))
 	{
 		free(new);
 		return (0);
@@ -51,73 +69,70 @@ int add_point(queue_t *path, const point_t *current)
 }
 
 /**
- * find_path_dfs - recursive function to backtrack the array
- * RIGHT BOTTOM LEFT UP order
- * @map: pointer to read-only array 2D
- * @rows: number of rows in map
- * @cols: number of cols in map
- * @curr: pointer to current cell visited
- * @target: pointer to objective
- * @path: pinter to queue of visited nodes
- * @visited: pointer to side 2D array to keep track of visited cell
+ * find_path_dfs - recursive helper to backtrack_array, searches for the
+ *   first path from a starting point to a target point within a
+ *   two-dimensional array using a recursive flood-fill in RDLU order
  *
- * Return: 1 for success (target found), 0 if not
+ * @path: queue of nodes visited, represents current candidate solution
+ * @map: pointer to a read-only two-dimensional array (0 represents a
+ *   walkable cell, 1 represents a blocked cell)
+ * @visited: pointer to a two-dimensional array recording which coordinate
+ *   postions have already been visited
+ * @rows: count of rows in map
+ * @cols: count of columns in map
+ * @curr: coordinates of current map cell
+ * @target: coordinates of the target point
+ * Return: 1 if target found in current recursion frame, 0 if not or failure
  */
-
-int find_path_dfs(char **map, int rows, int cols,
-				  point_t const *curr, point_t const *target, queue_t *path, char **visited)
+int find_path_dfs(queue_t *path, char **map, char **visited, int rows,
+				  int cols, const point_t *curr, const point_t *target)
 {
-	int i, found = 0;
-	point_t next[4] = {{+1, 0}, {0, +1}, {-1, 0}, {0, -1}};
-	/* coordinates like naval war respectively to RIGHT BOTTOM LEFT UP */
+	point_t next_step[4] = {{+1, 0}, {0, +1}, {-1, 0}, {0, -1}};
+	int i, target_found = 0;
+
+	if (!path || !map || !visited || !rows || !cols || !curr || !target)
+		return (0);
 
 	for (i = 0; i < 4; i++)
 	{
-		next[i].x += curr->x;
-		next[i].y += curr->y;
+		next_step[i].x += curr->x;
+		next_step[i].y += curr->y;
 	}
-
-	printf("Checking coordinates [%d, %d]\n", curr->x, curr->y);
+	printf("Checking coordinates [%i, %i]\n", curr->x, curr->y);
 	visited[curr->y][curr->x] = 1;
 
 	if (curr->x == target->x && curr->y == target->y)
-		return (add_point(path, curr));
+		return (addPointToPath(path, curr));
 
-	for (i = 0; !found && i < 4; i++)
+	for (i = 0; !target_found && i < 4; i++)
 	{
-		if (is_valid(path, map, visited, rows, cols, next + i))
-			found |= find_path_dfs(map, rows, cols, next + i, target, path, visited);
+		if (valid_move(path, map, visited, rows, cols, next_step + i))
+		{
+			target_found |= find_path_dfs(path, map, visited,
+										  rows, cols,
+										  next_step + i, target);
+		}
 	}
-	if (found)
-		return (add_point(path, curr));
+
+	if (target_found)
+		return (addPointToPath(path, curr));
+
 	return (0);
 }
-
-/**
- * backtracking_array - searches for first path from starting point
- * to a target within two-dim array
- *
- * @map: pointer to Read-only 2D array
- * @rows: number of rows
- * @cols: number of hey, cols
- * @start: coordinates of starting point
- * @target: coordinates of target point
- *
- * Return: a queue struct, in which each node is a point in the path from
- * start to => target
- *
- * ORDER IS:
- *  RIGHT - BOTTOM - LEFT - TOP
- */
 
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
-	int i, j;
-	char **visited = NULL;
 	queue_t *backpath = NULL;
+	char **visited = NULL;
+	int i, j;
+
+	if (!map || !rows || !cols || !start || !target)
+		return (NULL);
 
 	backpath = queue_create();
+	if (!backpath)
+		return (NULL);
 	visited = malloc(sizeof(char *) * rows);
 	if (!visited)
 	{
@@ -125,23 +140,25 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		return (NULL);
 	}
 	for (i = 0; i < rows; i++)
-		visited[i] = calloc(cols, sizeof(char));
-	if (!visited[i])
 	{
-		for (j = 0; j < i; j++)
-			free(visited[i]);
-		free(visited);
-		free(backpath);
-		return (NULL);
+		visited[i] = calloc(cols, sizeof(char));
+		if (!visited[i])
+		{
+			for (j = 0; j < i; j++)
+				free(visited[i]);
+			free(visited);
+			free(backpath);
+			return (NULL);
+		}
 	}
-
-	if (!find_path_dfs(map, rows, cols, start, target, backpath, visited))
+	if (!find_path_dfs(backpath, map, visited, rows, cols, start, target))
 	{
 		while (backpath->front)
 			free(dequeue(backpath));
 		queue_delete(backpath);
 		backpath = NULL;
 	}
+
 	for (i = 0; i < rows; i++)
 		free(visited[i]);
 	free(visited);
