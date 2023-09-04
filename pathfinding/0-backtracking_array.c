@@ -52,8 +52,18 @@ bool find_path(char **map, int rows, int cols,
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
+	int i;
 	char **visited = NULL;
 	queue_t *first_path = queue_create();
+
+	visited = malloc(sizeof(char *) * rows);
+	if (!visited)
+	{
+		free(first_path);
+		return (NULL);
+	}
+	for (i = 0; i < rows; i++)
+		visited[i] = calloc(cols, sizeof(char));
 
 	if (find_path(map, rows, cols, start, target, first_path, visited))
 		return (first_path);
@@ -62,4 +72,5 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		free(first_path);
 		return (NULL);
 	}
+	return (first_path);
 }
