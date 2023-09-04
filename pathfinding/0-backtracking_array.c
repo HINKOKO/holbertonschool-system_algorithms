@@ -2,9 +2,9 @@
 
 #include "pathfinding.h"
 
-bool is_valid(char **map, int rows, int cols, int x, int y)
+bool is_valid(queue_t *path, char **map, char **visited, int rows, int cols, point_t *next)
 {
-	return (x >= 0 && x < rows && y >= 0 && y < cols && map[x][y] == '0');
+	return (next->x >= 0 && next->x < rows && next->y >= 0 && next->y < cols && map[next->y][next->x] == '0');
 }
 
 bool find_path(char **map, int rows, int cols,
@@ -17,10 +17,18 @@ bool find_path(char **map, int rows, int cols,
 	{
 		next[i].x += curr->x;
 		next[i].y += curr->y;
-
-		printf("Checking coordinates [%d, %d]\n", curr->x, curr->y);
-		visited[curr->x][curr->y] = 1;
 	}
+
+	printf("Checking coordinates [%d, %d]\n", curr->x, curr->y);
+	visited[curr->x][curr->y] = 1;
+
+	for (i = 0; !found && i < 4; i++)
+	{
+		if (is_valid(path, map, visited, rows, cols, next + i))
+			found |= find_path(map, rows, cols, next + i, target, path, visited);
+	}
+	if (found)
+		return (queue_push_front(path, (void *)curr));
 	return (0);
 }
 
