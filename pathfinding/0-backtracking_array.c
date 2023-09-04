@@ -41,7 +41,11 @@ int add_point(queue_t *path, const point_t *current)
 
 	new->x = current->x, new->y = current->y;
 
-	queue_push_front(path, (void *)current);
+	if (!queue_push_front(path, (void *)current))
+	{
+		free(new);
+		return (NULL);
+	}
 
 	return (1);
 }
@@ -109,7 +113,7 @@ int find_path_dfs(char **map, int rows, int cols,
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
-	int i;
+	int i, j;
 	char **visited = NULL;
 	queue_t *backpath = NULL;
 
@@ -122,6 +126,14 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	}
 	for (i = 0; i < rows; i++)
 		visited[i] = calloc(cols, sizeof(char));
+	if (!visited[i])
+	{
+		for (j = 0; j < i; j++)
+			free(visited[i]);
+		free(visited);
+		free(backpath);
+		return (NULL);
+	}
 
 	if (!find_path_dfs(map, rows, cols, start, target, backpath, visited))
 	{
