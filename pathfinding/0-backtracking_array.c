@@ -11,9 +11,11 @@ bool find_path(char **map, int rows, int cols,
 			   point_t const *start, point_t const *target, queue_t *path)
 {
 	point_t *new = NULL;
-	int *dx, *dy, i, newX, newY;
+	int i, newX, newY;
 	int x = start->x;
 	int y = start->y;
+	int dx[] = {0, 1, 0, -1};
+	int dy[] = {1, 0, -1, 0};
 
 	new = malloc(sizeof(point_t));
 
@@ -23,8 +25,6 @@ bool find_path(char **map, int rows, int cols,
 		return (1);
 	}
 	/* order of exploration RIGHT BOTTOM LEFT TOP*/
-	int dx[] = {0, 1, 0, -1};
-	int dy[] = {1, 0, -1, 0};
 
 	for (i = 0; i < 4; i++)
 	{
