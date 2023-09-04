@@ -1,21 +1,6 @@
 #include "pathfinding.h"
-/* malloc calloc free */
-#include <stdlib.h>
-/* printf */
-#include <stdio.h>
 
 /**
- * valid_move - validates next possible step in a maze map grid
- *
- * @path: queue of nodes visited, represents current candidate solution
- * @map: pointer to a read-only two-dimensional array (0 represents a
- *   walkable cell, 1 represents a blocked cell)
- * @visited: pointer to a two-dimensional array recording which coordinate
- *   postions have already been visited
- * @rows: count of rows in map
- * @cols: count of columns in map
- * @step: coordinates of potential next map cell
- * Return: 1 if step is valid, 0 if not or failure
  */
 int valid_move(queue_t *path, char **map, char **visited, int rows,
 			   int cols, const point_t *step)
@@ -36,15 +21,6 @@ int valid_move(queue_t *path, char **map, char **visited, int rows,
 	return (1);
 }
 
-/**
- * addPointToPath - adds a map point in a 2D grid to the queue representing
- *   the first backtracking solution found in RDLU order; expects to build
- *   path from target to origin
- *
- * @path: queue of nodes visited, represents current candidate solution
- * @curr: coordinates of current map cell
- * Return: 1 on success, 0 on failure
- */
 int addPointToPath(queue_t *path, const point_t *curr)
 {
 	point_t *new = NULL;
@@ -59,31 +35,11 @@ int addPointToPath(queue_t *path, const point_t *curr)
 	new->x = curr->x;
 	new->y = curr->y;
 
-	if (!queue_push_front(path, (void *)new))
-	{
-		free(new);
-		return (0);
-	}
+	queue_push_front(path, (void *)new)
 
-	return (1);
+		return (1);
 }
 
-/**
- * find_path_dfs - recursive helper to backtrack_array, searches for the
- *   first path from a starting point to a target point within a
- *   two-dimensional array using a recursive flood-fill in RDLU order
- *
- * @path: queue of nodes visited, represents current candidate solution
- * @map: pointer to a read-only two-dimensional array (0 represents a
- *   walkable cell, 1 represents a blocked cell)
- * @visited: pointer to a two-dimensional array recording which coordinate
- *   postions have already been visited
- * @rows: count of rows in map
- * @cols: count of columns in map
- * @curr: coordinates of current map cell
- * @target: coordinates of the target point
- * Return: 1 if target found in current recursion frame, 0 if not or failure
- */
 int find_path_dfs(queue_t *path, char **map, char **visited, int rows,
 				  int cols, const point_t *curr, const point_t *target)
 {
