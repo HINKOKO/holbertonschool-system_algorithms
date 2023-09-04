@@ -4,6 +4,9 @@
 
 bool is_valid(queue_t *path, char **map, char **visited, int rows, int cols, point_t *next)
 {
+	(void)visited;
+	(void)path;
+
 	return (next->x >= 0 && next->x < rows && next->y >= 0 && next->y < cols && map[next->y][next->x] == '0');
 }
 
@@ -12,6 +15,7 @@ bool find_path(char **map, int rows, int cols,
 {
 	int i, found = 0;
 	point_t next[4] = {{+1, 0}, {0, +1}, {-1, 0}, {0, -1}};
+	/* coordinates like naval war respectively to RIGHT BOTTOM LEFT UP */
 
 	for (i = 0; i < 4; i++)
 	{
@@ -21,6 +25,9 @@ bool find_path(char **map, int rows, int cols,
 
 	printf("Checking coordinates [%d, %d]\n", curr->x, curr->y);
 	visited[curr->x][curr->y] = 1;
+
+	if (curr->x == target->x && curr->y == target->y)
+		return (queue_push_front(path, (void *)curr));
 
 	for (i = 0; !found && i < 4; i++)
 	{
