@@ -35,8 +35,8 @@ bool find_path(char **map, int rows, int cols,
 		{
 			/* mark cell as visited */
 			map[newX][newY] = '1';
-			point_t new = {newX, newY};
-			if (find_path(map, rows, cols, &new, target, path))
+			new->x = newX, new->y = newY;
+			if (find_path(map, rows, cols, new, target, path))
 			{
 				queue_push_front(path, (void *)start);
 				return (1);
