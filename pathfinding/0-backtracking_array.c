@@ -102,9 +102,13 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 
 	if (!find_path(map, rows, cols, start, target, first_path, visited))
 	{
+		while (first_path->front)
+			free(dequeue(first_path));
 		queue_delete(first_path);
 		first_path = NULL;
 	}
+	for (i = 0; i < rows; i++)
+		free(visited[i]);
 	free(visited);
 	return (first_path);
 }
