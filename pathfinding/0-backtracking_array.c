@@ -11,6 +11,7 @@ bool find_path(char **map, int rows, int cols,
 			   point_t const *start, point_t const *target, queue_t *path)
 {
 	point_t *new = NULL;
+	int *dx, *dy, i, newX, newY;
 	int x = start->x;
 	int y = start->y;
 
@@ -24,19 +25,18 @@ bool find_path(char **map, int rows, int cols,
 	/* order of exploration RIGHT BOTTOM LEFT TOP*/
 	int dx[] = {0, 1, 0, -1};
 	int dy[] = {1, 0, -1, 0};
-	char moves[] = {'R', 'B', 'L', 'T'};
 
-	for (int i = 0; i < 4; i++)
+	for (i = 0; i < 4; i++)
 	{
-		int newX = x + dx[i];
-		int newY = y + dy[i];
+		newX = x + dx[i];
+		newY = y + dy[i];
 
 		if (is_valid(map, rows, cols, newX, newY))
 		{
 			/* mark cell as visited */
 			map[newX][newY] = '1';
-			point_t newPoint = {newX, newY};
-			if (find_path(map, rows, cols, &newPoint, target, path))
+			point_t new = {newX, newY};
+			if (find_path(map, rows, cols, &new, target, path))
 			{
 				queue_push_front(path, (void *)start);
 				return (1);
