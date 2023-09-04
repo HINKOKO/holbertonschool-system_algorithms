@@ -4,10 +4,17 @@
 
 bool is_valid(queue_t *path, char **map, char **visited, int rows, int cols, point_t *next)
 {
-	(void)visited;
-	(void)path;
+	if (!next->x >= 0 && next->x < rows && next->y >= 0 && next->y < cols && map[next->y][next->x] == '0')
+		return (0);
 
-	return (next->x >= 0 && next->x < rows && next->y >= 0 && next->y < cols && map[next->y][next->x] == '0');
+	if (map[next->x][next->y] == '1')
+		return (0);
+
+	/* step in a visited cell ? */
+	if (visited[next->x][next->y])
+		return (0);
+
+	return (1);
 }
 
 bool find_path(char **map, int rows, int cols,
@@ -72,12 +79,11 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 	for (i = 0; i < rows; i++)
 		visited[i] = calloc(cols, sizeof(char));
 
-	if (find_path(map, rows, cols, start, target, first_path, visited))
-		return (first_path);
-	else
+	if (!find_path(map, rows, cols, start, target, first_path, visited))
 	{
-		free(first_path);
-		return (NULL);
+		queue_delete(first_path);
+		first_path = NULL;
 	}
+	free(visited);
 	return (first_path);
 }
