@@ -44,7 +44,7 @@ int add_point(queue_t *path, const point_t *current)
 	if (!queue_push_front(path, (void *)current))
 	{
 		free(new);
-		return (NULL);
+		return (0);
 	}
 
 	return (1);
