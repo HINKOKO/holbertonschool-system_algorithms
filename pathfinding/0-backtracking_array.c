@@ -1,18 +1,18 @@
 #include "pathfinding.h"
 
-int is_valid(queue_t *path, char **map, char **visited, int rows, int cols, point_t *next)
+int is_valid(queue_t *path, char **map, char **visited, int rows, int cols, const point_t *next)
 {
 	if (!path || !map || !visited || !rows || !cols || !next)
 		return (0);
 
-	if (!((next->x >= 0 && next->x < rows) && (next->y >= 0 && next->y < cols)))
+	if (!((next->x >= 0 && next->x < cols) && (next->y >= 0 && next->y < rows)))
 		return (0);
 
 	if (map[next->x][next->y] == '1')
 		return (0);
 
 	/* step in a visited cell ? */
-	if (visited[next->x][next->y])
+	if (visited[next->y][next->x])
 		return (0);
 
 	return (1);
