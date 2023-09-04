@@ -35,9 +35,9 @@ int addPointToPath(queue_t *path, const point_t *curr)
 	new->x = curr->x;
 	new->y = curr->y;
 
-	queue_push_front(path, (void *)new)
+	queue_push_front(path, (void *)new);
 
-		return (1);
+	return (1);
 }
 
 int find_path_dfs(queue_t *path, char **map, char **visited, int rows,
