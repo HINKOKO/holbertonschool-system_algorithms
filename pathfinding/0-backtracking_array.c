@@ -4,6 +4,8 @@
 
 bool is_valid(queue_t *path, char **map, char **visited, int rows, int cols, point_t *next)
 {
+	if (!path || !map)
+		return (0);
 	if (!next->x >= 0 && next->x < rows && next->y >= 0 && next->y < cols && map[next->y][next->x] == '0')
 		return (0);
 
