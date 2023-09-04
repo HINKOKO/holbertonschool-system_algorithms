@@ -19,6 +19,25 @@ bool is_valid(queue_t *path, char **map, char **visited, int rows, int cols, poi
 	return (1);
 }
 
+int add_point(queue_t *path, const point_t *current)
+{
+	point_t *new = NULL;
+
+	/* sanity as usual */
+	if (!path || !current)
+		return (0);
+	new = malloc(sizeof(point_t));
+	if (!new)
+		return (0);
+
+	if (!queue_push_front(path, (void *)new))
+	{
+		free(new);
+		return (0);
+	}
+	return (1);
+}
+
 bool find_path(char **map, int rows, int cols,
 			   point_t const *curr, point_t const *target, queue_t *path, char **visited)
 {
@@ -36,7 +55,7 @@ bool find_path(char **map, int rows, int cols,
 	visited[curr->x][curr->y] = 1;
 
 	if (curr->x == target->x && curr->y == target->y)
-		return (queue_push_front(path, (void *)curr));
+		return (add_point(path, (void *)curr));
 
 	for (i = 0; !found && i < 4; i++)
 	{
@@ -44,7 +63,7 @@ bool find_path(char **map, int rows, int cols,
 			found |= find_path(map, rows, cols, next + i, target, path, visited);
 	}
 	if (found)
-		return (queue_push_front(path, (void *)curr));
+		return (add_point(path, (void *)curr));
 	return (0);
 }
 
