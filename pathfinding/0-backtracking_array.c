@@ -1,12 +1,11 @@
-#include <stdbool.h>
-
 #include "pathfinding.h"
 
-bool is_valid(queue_t *path, char **map, char **visited, int rows, int cols, point_t *next)
+int is_valid(queue_t *path, char **map, char **visited, int rows, int cols, point_t *next)
 {
-	if (!path || !map)
+	if (!path || !map || !visited || !rows || !cols || !next)
 		return (0);
-	if (!next->x >= 0 && next->x < rows && next->y >= 0 && next->y < cols && map[next->y][next->x] == '0')
+
+	if (!((next->x >= 0 && next->x < rows) && (next->y >= 0 && next->y < cols)))
 		return (0);
 
 	if (map[next->x][next->y] == '1')
@@ -19,27 +18,50 @@ bool is_valid(queue_t *path, char **map, char **visited, int rows, int cols, poi
 	return (1);
 }
 
+/**
+ * add_point - adds a point_t point to the queue that represent
+ * first path found by backtracking trick
+ *
+ * @path: queue of nodes already visited
+ * @current: current (valid) point we wanna add
+ * Return: 1 for success, 0 for failure
+ */
+
 int add_point(queue_t *path, const point_t *current)
 {
 	point_t *new = NULL;
 
-	/* sanity as usual */
+	/* sanity check */
 	if (!path || !current)
 		return (0);
+
 	new = malloc(sizeof(point_t));
 	if (!new)
 		return (0);
 
-	if (!queue_push_front(path, (void *)new))
-	{
-		free(new);
-		return (0);
-	}
+	new->x = current->x, new->y = current->y;
+
+	queue_push_front(path, (void *)current);
+
 	return (1);
 }
 
-bool find_path(char **map, int rows, int cols,
-			   point_t const *curr, point_t const *target, queue_t *path, char **visited)
+/**
+ * find_path_dfs - recursive function to backtrack the array
+ * RIGHT BOTTOM LEFT UP order
+ * @map: pointer to read-only array 2D
+ * @rows: number of rows in map
+ * @cols: number of cols in map
+ * @curr: pointer to current cell visited
+ * @target: pointer to objective
+ * @path: pinter to queue of visited nodes
+ * @visited: pointer to side 2D array to keep track of visited cell
+ *
+ * Return: 1 for success (target found), 0 if not
+ */
+
+int find_path_dfs(char **map, int rows, int cols,
+				  point_t const *curr, point_t const *target, queue_t *path, char **visited)
 {
 	int i, found = 0;
 	point_t next[4] = {{+1, 0}, {0, +1}, {-1, 0}, {0, -1}};
@@ -52,18 +74,18 @@ bool find_path(char **map, int rows, int cols,
 	}
 
 	printf("Checking coordinates [%d, %d]\n", curr->x, curr->y);
-	visited[curr->x][curr->y] = 1;
+	visited[curr->y][curr->x] = 1;
 
 	if (curr->x == target->x && curr->y == target->y)
-		return (add_point(path, (void *)curr));
+		return (add_point(path, curr));
 
 	for (i = 0; !found && i < 4; i++)
 	{
 		if (is_valid(path, map, visited, rows, cols, next + i))
-			found |= find_path(map, rows, cols, next + i, target, path, visited);
+			found |= find_path_dfs(map, rows, cols, next + i, target, path, visited);
 	}
 	if (found)
-		return (add_point(path, (void *)curr));
+		return (add_point(path, curr));
 	return (0);
 }
 
@@ -89,26 +111,27 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 {
 	int i;
 	char **visited = NULL;
-	queue_t *first_path = queue_create();
+	queue_t *backpath = NULL;
 
+	backpath = queue_create();
 	visited = malloc(sizeof(char *) * rows);
 	if (!visited)
 	{
-		free(first_path);
+		free(backpath);
 		return (NULL);
 	}
 	for (i = 0; i < rows; i++)
 		visited[i] = calloc(cols, sizeof(char));
 
-	if (!find_path(map, rows, cols, start, target, first_path, visited))
+	if (!find_path_dfs(map, rows, cols, start, target, backpath, visited))
 	{
-		while (first_path->front)
-			free(dequeue(first_path));
-		queue_delete(first_path);
-		first_path = NULL;
+		while (backpath->front)
+			free(dequeue(backpath));
+		queue_delete(backpath);
+		backpath = NULL;
 	}
 	for (i = 0; i < rows; i++)
 		free(visited[i]);
 	free(visited);
-	return (first_path);
+	return (backpath);
 }
