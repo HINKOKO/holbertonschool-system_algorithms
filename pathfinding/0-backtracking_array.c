@@ -8,42 +8,18 @@ bool is_valid(char **map, int rows, int cols, int x, int y)
 }
 
 bool find_path(char **map, int rows, int cols,
-			   point_t const *start, point_t const *target, queue_t *path)
+			   point_t const *curr, point_t const *target, queue_t *path, char **visited)
 {
-	point_t *new = NULL;
-	int i, newX, newY;
-	int x = start->x;
-	int y = start->y;
-	int dx[] = {0, 1, 0, -1};
-	int dy[] = {1, 0, -1, 0};
-
-	new = malloc(sizeof(point_t));
-
-	if (x == target->x && y == target->y)
-	{
-		queue_push_front(path, (void *)start);
-		return (1);
-	}
-	/* order of exploration RIGHT BOTTOM LEFT TOP*/
+	int i, found = 0;
+	point_t next[4] = {{+1, 0}, {0, +1}, {-1, 0}, {0, -1}};
 
 	for (i = 0; i < 4; i++)
 	{
-		newX = x + dx[i];
-		newY = y + dy[i];
+		next[i].x += curr->x;
+		next[i].y += curr->y;
 
-		if (is_valid(map, rows, cols, newX, newY))
-		{
-			/* mark cell as visited */
-			map[newX][newY] = '1';
-			new->x = newX, new->y = newY;
-			if (find_path(map, rows, cols, new, target, path))
-			{
-				queue_push_front(path, (void *)start);
-				return (1);
-			}
-
-			map[newX][newY] = '0'; /* backtrack if path not found */
-		}
+		printf("Checking coordinates [%d, %d]\n", curr->x, curr->y);
+		visited[curr->x][curr->y] = 1;
 	}
 	return (0);
 }
@@ -68,9 +44,10 @@ bool find_path(char **map, int rows, int cols,
 queue_t *backtracking_array(char **map, int rows, int cols,
 							point_t const *start, point_t const *target)
 {
+	char **visited = NULL;
 	queue_t *first_path = queue_create();
 
-	if (find_path(map, rows, cols, start, target, first_path))
+	if (find_path(map, rows, cols, start, target, first_path, visited))
 		return (first_path);
 	else
 	{
