@@ -1,3 +1,4 @@
+#include <string.h>
 #include "pathfinding.h"
 
 int backtrack(char *list, queue_t *path,
