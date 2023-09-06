@@ -4,6 +4,7 @@
 static char *visited;
 static queue_t *stack;
 static vertex_t const *target_city;
+static graph_t *g;
 
 /**
  * backtrack - helper function to recursively track the target
@@ -63,6 +64,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	if (!visited || !realpath)
 		return (NULL);
 
+	g = graph;
 	target_city = target;
 
 	if (backtrack(start))
