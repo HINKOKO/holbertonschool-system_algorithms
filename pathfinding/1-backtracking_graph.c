@@ -28,6 +28,8 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	if (!visited || !realpath)
 		return (NULL);
 
+	setbuf(stdout, NULL);
+
 	g = graph;
 	target_city = target;
 
