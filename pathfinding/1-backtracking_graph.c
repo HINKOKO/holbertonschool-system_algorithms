@@ -4,7 +4,6 @@
 static char *visited;
 static queue_t *stack;
 static vertex_t const *target_city;
-static graph_t *g;
 
 /**
  * backtracking_graph - look for first path from start to target in graph
@@ -24,13 +23,10 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	queue_t *realpath = NULL;
 
 	visited = calloc(graph->nb_vertices, sizeof(*visited));
-	realpath = queue_create();
-	if (!visited || !realpath)
+	stack = queue_create();
+	if (!visited || !stack)
 		return (NULL);
 
-	setbuf(stdout, NULL);
-
-	g = graph;
 	target_city = target;
 
 	if (backtrack(start))
