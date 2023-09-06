@@ -1,69 +1,59 @@
-#include <string.h>
-
 #include "pathfinding.h"
 
-int backtrack_helper(queue_t *path, char *visited, vertex_t const *current,
-					 vertex_t const *target)
+int backtrack(char *list, queue_t *path,
+			  const vertex_t *start, const vertex_t *target)
 {
-	edge_t *ed = NULL;
-	vertex_t *vrt = NULL;
+	edge_t *edge = NULL;
+	vertex_t *vertice = NULL;
 	char *content = NULL;
 
-	if (!current) /* last || avoid already visited */
+	if (!start)
 		return (0);
-
-	printf("Checking %s\n", current->content);
-
-	content = strdup(current->content);
-	queue_push_front(path, (void *)content);
-	if (current->content == target->content)
+	printf("Checking %s\n", start->content);
+	content = strdup(start->content);
+	queue_push_front(path, content);
+	if (start->content == target->content)
 		return (1);
-
-	visited[current->index] = 1;
-	/* edges point to head node of LL of edges, browse them */
-	for (ed = current->edges; ed; ed = ed->next)
+	list[start->index] = 1;
+	for (edge = start->edges; edge; edge = edge->next)
 	{
-		vrt = ed->dest;
-		if (!visited[current->index] && backtrack_helper(path, visited, vrt, target))
+		vertice = edge->dest;
+		if (!list[vertice->index] && backtrack(list, path, vertice, target))
 			return (1);
 	}
 	free(dequeue(path));
 	return (0);
 }
-/**
- * backtracking_graph - search for the first path from start to target in a graph
- *
- * @graph: pointer to the graph
- * @start: pointer to starting vertex
- * @targer: pointer to desired vertex to reach
- *
- * Return: must return a queue, with each node (char *) corresponding
- * to a vertex, forming a path from 'start' to 'target'
- *
- */
-queue_t *backtracking_graph(graph_t *graph, vertex_t const *start, vertex_t const *target)
-{
-	queue_t *path_track = queue_create(), *final_queue = queue_create();
-	char *visited = NULL;
-	char *content = NULL;
 
-	visited = calloc((int)graph->nb_vertices, sizeof(char));
-	if (!visited)
+queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
+							vertex_t const *target)
+{
+	queue_t *path = queue_create(), *transverse = queue_create();
+	/*vertex_t *vertex_1 = NULL, *vertex_2 = NULL;*/
+	char *list = NULL, *content = NULL;
+
+	if (!graph || !start || !target)
 		return (NULL);
 
-	if (!backtrack_helper(path_track, visited, start, target))
+	list = calloc((int)graph->nb_vertices, sizeof(char));
+	if (!list || !path || !transverse)
 	{
-		while (path_track->front)
-			free(dequeue(path_track));
-		free(path_track), free(final_queue);
-		path_track = NULL, final_queue = NULL;
+		fprintf(stderr, "Can't malloc\n");
+		return (0);
+	}
+	if (!backtrack(list, path, start, target))
+	{
+		while (path->front)
+			free(dequeue(path));
+		free(path), free(transverse);
+		path = NULL, transverse = NULL;
 	}
 	else
 	{
-		while ((content = dequeue(path_track)))
-			queue_push_front(final_queue, (void *)content);
-		free(path_track);
+		while ((content = dequeue(path)))
+			queue_push_front(transverse, content);
+		free(path);
 	}
-	free(visited);
-	return (final_queue);
+	free(list);
+	return (transverse);
 }
