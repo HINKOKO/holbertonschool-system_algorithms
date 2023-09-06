@@ -23,8 +23,10 @@ typedef struct point_s
 
 /* queue stuff on my side for testing*/
 
-queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start, point_t const *target);
-queue_t *backtracking_graph(graph_t *graph, vertex_t const *start, vertex_t const *target);
+queue_t *backtracking_array(char **map, int rows, int cols,
+							point_t const *start, point_t const *target);
+queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
+							vertex_t const *target);
 int backtrack(vertex_t const *curr);
 
 #endif /* __PATHFINDER__ */

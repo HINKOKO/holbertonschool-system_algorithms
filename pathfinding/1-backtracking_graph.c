@@ -6,6 +6,42 @@ static queue_t *stack;
 static vertex_t const *target_city;
 
 /**
+ * backtrack - helper function to recursively track the target
+ *
+ * @curr: pointer to current vertex being visited
+ *
+ * Return: 1 for success, 0 otherwise
+ */
+
+int backtrack(vertex_t const *curr)
+{
+	char *content = NULL;
+	edge_t *ed = NULL;
+
+	if (visited[curr->index])
+		return (0);
+
+	printf("Checking %s\n", curr->content);
+	/* mark as visited */
+	visited[curr->index] = 1;
+
+	content = strdup(curr->content);
+	queue_push_front(stack, content);
+	if (curr == target_city)
+		return (1);
+
+	ed = curr->edges;
+	while (ed)
+	{
+		if (backtrack(ed->dest))
+			return (1);
+		ed = ed->next;
+	}
+	free(dequeue(stack));
+	return (0);
+}
+
+/**
  * backtracking_graph - look for first path from start to target in graph
  *
  * @graph: pointer to the graph to path in
@@ -40,40 +76,4 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	queue_delete(stack);
 	free(visited);
 	return (realpath);
-}
-
-/**
- * backtrack - helper function to recursively track the target
- *
- * @curr: pointer to current vertex being visited
- *
- * Return: 1 for success, 0 otherwise
- */
-
-int backtrack(vertex_t const *curr)
-{
-	char *content = NULL;
-	edge_t *ed = NULL;
-
-	if (visited[curr->index])
-		return (0);
-
-	printf("Checking %s\n", curr->content);
-	/* mark as visited */
-	visited[curr->index] = 1;
-
-	content = strdup(curr->content);
-	queue_push_front(stack, content);
-	if (curr == target_city)
-		return (1);
-
-	ed = curr->edges;
-	while (ed)
-	{
-		if (backtrack(ed->dest))
-			return (1);
-		ed = ed->next;
-	}
-	free(dequeue(stack));
-	return (0);
 }
