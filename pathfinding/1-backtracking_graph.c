@@ -3,17 +3,17 @@
 
 static char *visited;
 static queue_t *stack;
+static vertex_t const *target_city;
 
 /**
  * backtrack - helper function to recursively track the target
  *
  * @curr: pointer to current vertex being visited
- * @target: pointer to targeted vertex
  *
  * Return: 1 for success, 0 otherwise
  */
 
-int backtrack(vertex_t const *curr, vertex_t const *target)
+int backtrack(vertex_t const *curr)
 {
 	char *content = NULL;
 	edge_t *ed = NULL;
@@ -27,13 +27,13 @@ int backtrack(vertex_t const *curr, vertex_t const *target)
 
 	content = strdup(curr->content);
 	queue_push_front(stack, content);
-	if (curr->content == target->content)
+	if (curr == target_city)
 		return (1);
 
 	ed = curr->edges;
 	while (ed)
 	{
-		if (backtrack(ed->dest, target))
+		if (backtrack(ed->dest))
 			return (1);
 		ed = ed->next;
 	}
@@ -58,14 +58,14 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 {
 	queue_t *realpath = NULL;
 
-	setbuf(stdout, NULL);
-
 	visited = calloc(graph->nb_vertices, sizeof(*visited));
 	realpath = queue_create();
 	if (!visited || !realpath)
 		return (NULL);
 
-	if (backtrack(start, target))
+	target_city = target;
+
+	if (backtrack(start))
 	{
 		char *city;
 
