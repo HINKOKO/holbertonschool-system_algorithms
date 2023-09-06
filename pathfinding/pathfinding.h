@@ -25,6 +25,6 @@ typedef struct point_s
 
 queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start, point_t const *target);
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start, vertex_t const *target);
-int backtrack(vertex_t const *curr, vertex_t const *target);
+int backtrack(vertex_t const *curr);
 
 #endif /* __PATHFINDER__ */
