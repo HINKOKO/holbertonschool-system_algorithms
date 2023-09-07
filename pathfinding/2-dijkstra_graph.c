@@ -1,6 +1,7 @@
 #include "pathfinding.h"
 
 #include <sys/types.h>
+#include <string.h>
 
 /* infinite 'distance' from computerphile => INT_MAX usage*/
 #include <limits.h>
@@ -8,10 +9,10 @@
 queue_t *pathfinder(vertex_t **predecessors, vertex_t const *target)
 {
 	queue_t *path = queue_create();
+	vertex_t const *current = target;
+
 	if (!path || !predecessors[target->index])
 		return (NULL);
-
-	vertex_t const *current = target;
 
 	while (current)
 	{
@@ -38,7 +39,8 @@ void compute_dist(graph_t *graph, vertex_t const *start,
 	{
 		curr = dequeue(q);
 		edge = curr->edges;
-		printf("Checking %s, distance from %s is %zd", curr->content, start->content, dist[curr->index]);
+		printf("Checking %s, distance from %s is %lu", curr->content,
+			   start->content, dist[curr->index]);
 		while (edge)
 		{
 			neighbor = edge->dest;
@@ -84,7 +86,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 
 	/* consider at beginning that all distances are Infinite */
 	/* fill memory with constant byte fills n bytes pointed by s with c 'scn'*/
-	memset(dist, INT_MAX, graph->nb_vertices * sizeof(*dist));
+	memset(dist, 0xFF, graph->nb_vertices * sizeof(*dist));
 	/* set start to be the first and distance 0*/
 	dist[start->index] = 0;
 
