@@ -29,4 +29,8 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 							vertex_t const *target);
 int backtrack(vertex_t const *curr);
 
+/* Dijkstra's stuff */
+queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
+						vertex_t const *target);
+
 #endif /* __PATHFINDER__ */
