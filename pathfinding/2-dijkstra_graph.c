@@ -6,6 +6,13 @@
 /* infinite 'distance' from computerphile => INT_MAX usage*/
 #include <limits.h>
 
+/**
+ * pathfinder - find the path
+ * @predecessors: record of previous vertices to rebuilt
+ * @target: pointer to targeted vertex
+ * Return: a queue path to go to target
+ */
+
 queue_t *pathfinder(vertex_t **predecessors, vertex_t const *target)
 {
 	queue_t *path = queue_create();
@@ -21,6 +28,16 @@ queue_t *pathfinder(vertex_t **predecessors, vertex_t const *target)
 	}
 	return (path);
 }
+
+/**
+ * compute_dist - computes the distance
+ * @graph: pointer to graph we work in
+ * @start: pointer to starting vertex
+ * @map: map of vertices
+ * @dist: record of cumuled dist/weights/costs
+ * @predecessors: record of previous vertices to rebuilt
+ * the path when done
+ */
 
 void compute_dist(graph_t *graph, vertex_t const *start,
 				  int *map, size_t *dist, vertex_t **predecessors)
