@@ -140,6 +140,7 @@ queue_t *backtracking_array(char **map, int rows, int cols,
 		while (path->front)
 			free(dequeue(path));
 		queue_delete(path);
+		path = NULL;
 	}
 
 	for (i = 0; i < rows; i++)
