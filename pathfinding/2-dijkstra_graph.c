@@ -70,7 +70,6 @@ void edgar_dijkstra(graph_t *graph, size_t *dist, size_t *seen, vertex_t **path_
 		tmp = dist[i] + edge->weight;
 		if (dist[edge->dest->index] > tmp)
 		{
-			printf("dist index mystery => %ld\n", dist[edge->dest->index]);
 			dist[edge->dest->index] = tmp;
 			path_via[edge->dest->index] = curr;
 		}
@@ -96,8 +95,6 @@ void add_to_path(graph_t *graph, queue_t *path, vertex_t **path_via,
 {
 	size_t i = target->index;
 	size_t size = graph->nb_vertices;
-	printf("size is therefor => %ld\n", size);
-	printf("what is i in add_to_path => %ld\n", i);
 	if (!path_via[i])
 		return;
 
@@ -106,7 +103,6 @@ void add_to_path(graph_t *graph, queue_t *path, vertex_t **path_via,
 		if (!queue_push_front(path, strdup(path_via[i]->content)))
 			queue_delete(path);
 		i = path_via[i]->index;
-		printf("start index is what john => %ld\n", start->index);
 		if (i == start->index)
 			return;
 	}
