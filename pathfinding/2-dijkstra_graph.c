@@ -3,8 +3,6 @@
 
 #include "pathfinding.h"
 
-#define COLOR "\033[32m"
-#define RESET "\033[0m"
 #define INF 0xFFFF
 
 /**
@@ -23,6 +21,9 @@ vertex_t *pick_min_vertex(graph_t *graph, size_t *dist, size_t *seen, size_t *id
 	vertex_t *v;
 
 	v = graph->vertices;
+	if (!v)
+		return (NULL);
+
 	*idx = INF;
 	for (i = 0; i < graph->nb_vertices; i++)
 	{
@@ -70,7 +71,7 @@ void edgar_dijkstra(graph_t *graph, size_t *dist, size_t *seen, vertex_t **path_
 		tmp = dist[i] + edge->weight;
 		if (dist[edge->dest->index] > tmp)
 		{
-			dist[edge->dest->index] = tmp;
+			dist[edge->dest->index] = dist[i] + edge->weight;
 			path_via[edge->dest->index] = curr;
 		}
 		edge = edge->next;
@@ -94,8 +95,12 @@ void add_to_path(graph_t *graph, queue_t *path, vertex_t **path_via,
 				 vertex_t const *start, vertex_t const *target)
 {
 	size_t i = target->index;
+
 	if (!path_via[i])
 		return;
+
+	if (!queue_push_front(path, strdup(target->content)))
+		queue_delete(path);
 
 	while (path_via[i] && i < graph->nb_vertices)
 	{
@@ -128,7 +133,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start, vertex_t const *t
 
 	seen = calloc(graph->nb_vertices, sizeof(*seen));
 	path_via = calloc(graph->nb_vertices, sizeof(**path_via));
-	dist = calloc(graph->nb_vertices, sizeof(*dist));
+	dist = malloc(sizeof(*dist) * graph->nb_vertices);
 
 	if (!dist || !path_via || !seen)
 		return (fprintf(stderr, "Lost in graph Abort Mayday"), NULL);
