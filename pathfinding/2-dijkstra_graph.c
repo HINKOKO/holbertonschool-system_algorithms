@@ -94,7 +94,6 @@ void add_to_path(graph_t *graph, queue_t *path, vertex_t **path_via,
 				 vertex_t const *start, vertex_t const *target)
 {
 	size_t i = target->index;
-	size_t size = graph->nb_vertices;
 	if (!path_via[i])
 		return;
 
