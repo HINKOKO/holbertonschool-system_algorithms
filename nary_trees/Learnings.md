@@ -59,7 +59,7 @@ To model the possible moves and outcomes in a game, you can use a N-ary tree dud
 
 You can define a **struct** to hold the value/content of the node and a pointer to its children(s). The, you can just use a pointer to this struct to represent the **root** of your N-ary tree, and the kids of each node can be represented using a linked list of pointers to their respective structs. The [nary_trees](./nary_trees.h) file of this folder shows a struct of this kind.
 
-### **4. What is the diameter of an N-ary tree**(4)
+### [**4. What is the diameter of an N-ary tree**](#4)
 
 Diameter refers to the **longest path between any two nodes in the tree**. It can be defined as the maximum value of the sum of the distances from the <br>
 root node to any two nodes in the tree. <br>

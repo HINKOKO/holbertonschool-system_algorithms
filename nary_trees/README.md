@@ -1,12 +1,11 @@
 # **C N-ary trees**
 
-
 ## **General Learnings**
 
-- [What is a N-ary tree](./Learnings.md#1)
-- [What are the most common usage of N-ary trees](./Learnings.md#2)
-- [How to represent an N-ary tree in C in at least two different ways](./Learnings.md#3)
-- [What is the diameter of an N-ary tree](./Learnings.md#4)
+- [What is a N-ary tree](./Learnings.md#1-what-is-a-n-ary-tree)
+- [What are the most common usage of N-ary trees](./Learnings.md#2-what-are-the-most-common-usage-of-n-ary-trees)
+- [How to represent an N-ary tree in C in at least two different ways](./Learnings.md#3-how-to-represent-an-n-ary-tree-in-c-in-at-least-two-different-ways)
+- [What is the diameter of an N-ary tree](./Learnings.md#4-what-is-the-diameter-of-an-n-ary-tree)
 
 ## **Requirements**
 
