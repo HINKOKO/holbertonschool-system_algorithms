@@ -15,17 +15,12 @@
 
 int path_exists(nary_tree_t const *root, char const *const *path)
 {
-	nary_tree_t *curr = NULL;
-
-	curr = (nary_tree_t *)root;
+	nary_tree_t *curr = (nary_tree_t *)root;
 
 	while (*path != NULL && curr != NULL)
 	{
-		if (strcmp(curr->content, *path) == 0)
-		{
-			path++;
-			curr = curr->children;
-		}
+		if (!strcmp(curr->content, *path))
+			path++, curr = curr->children;
 		else
 			curr = curr->next;
 	}
