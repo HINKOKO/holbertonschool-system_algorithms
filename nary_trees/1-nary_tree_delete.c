@@ -13,7 +13,7 @@ void nary_tree_delete(nary_tree_t *tree)
 	nary_tree_t *eraser = NULL;
 
 	if (!tree)
-		return (NULL);
+		return;
 
 	while (tree->children)
 	{
