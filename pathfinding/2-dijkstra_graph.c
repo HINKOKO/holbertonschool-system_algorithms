@@ -156,5 +156,10 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	add_to_path(graph, q, path_via, start, target);
 	free(seen), free(dist), free(path_via);
 
-	return (q->front ? q : NULL);
+	if (!q->front)
+	{
+		free(q);
+		return (NULL);
+	}
+	return (q);
 }
