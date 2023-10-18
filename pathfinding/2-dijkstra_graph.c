@@ -15,7 +15,8 @@
  * Return: vertex index with min weight from src to it
  */
 
-vertex_t *pick_min_vertex(graph_t *graph, size_t *dist, size_t *seen, size_t *idx)
+vertex_t *pick_min_vertex(graph_t *graph, size_t *dist,
+						  size_t *seen, size_t *idx)
 {
 	size_t i, min = INF;
 	vertex_t *v;
@@ -45,16 +46,24 @@ vertex_t *pick_min_vertex(graph_t *graph, size_t *dist, size_t *seen, size_t *id
 }
 
 /**
- * edgar_dijkstra - performs a recursive call to Dijkstra main logic
+ * edgar_dijkstra - main logic of Dijkstra's Idea
+ * @graph: pointer to graph to Dijkstra-tize
+ * @dist: distances record
+ * @seen: seen vertices record
+ * @path_via: array of pointer to via vertices we need to go
+ * @start: pointer to starting vertex
+ * @target: pointer to targeted vertex
+ * @idx: index
+ *
  * => From the vertex we are, we select the min cost buddy vertex
  * which becomes 'curr' vertex
  * => Then go through the edges of that curr, record the 'seen'ing of those
  * => update the 'best-so-far' distances for vertices with edges from curr
- *
  */
 
-void edgar_dijkstra(graph_t *graph, size_t *dist, size_t *seen, vertex_t **path_via,
-					vertex_t const *start, vertex_t const *target, size_t idx)
+void edgar_dijkstra(graph_t *graph, size_t *dist, size_t *seen,
+					vertex_t **path_via, vertex_t const *start,
+					vertex_t const *target, size_t idx)
 {
 	vertex_t *curr;
 	edge_t *edge;
@@ -63,7 +72,8 @@ void edgar_dijkstra(graph_t *graph, size_t *dist, size_t *seen, vertex_t **path_
 	curr = pick_min_vertex(graph, dist, seen, &idx);
 	if (!curr)
 		return;
-	printf("Checking %s, distance from %s is %ld\n", curr->content, start->content, dist[curr->index]);
+	printf("Checking %s, distance from %s is %ld\n",
+		   curr->content, start->content, dist[curr->index]);
 	i = curr->index;
 	edge = curr->edges;
 	while (edge && seen[i] == 0)
@@ -78,7 +88,7 @@ void edgar_dijkstra(graph_t *graph, size_t *dist, size_t *seen, vertex_t **path_
 	}
 	seen[i] = 1;
 	if (seen[target->index] == 1)
-		return; /* we're done, at some point */
+		return;
 	edgar_dijkstra(graph, dist, seen, path_via, start, target, idx);
 }
 
@@ -124,7 +134,8 @@ void add_to_path(graph_t *graph, queue_t *path, vertex_t **path_via,
  * representing path from start to end
  */
 
-queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start, vertex_t const *target)
+queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
+						vertex_t const *target)
 {
 	size_t *dist = 0, *seen = 0;
 	size_t size = 0;
@@ -145,5 +156,5 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start, vertex_t const *t
 	add_to_path(graph, q, path_via, start, target);
 	free(seen), free(dist), free(path_via);
 
-	return (q);
+	return (q->front ? q : NULL);
 }
