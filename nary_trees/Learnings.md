@@ -6,8 +6,11 @@ A N-ary tree - a.k.a "k-ary" , "k-way" or even "multiway" tree - is a special ty
 
 #### **Types of N-ary trees**<br>
 
-1. A **Full N-ary** tree is when each level has **0 or N childrens**
-2. A **complete N-ary** tree is a **full n-ary tree** where each level are at the same depth.
+1. A **Full N-ary** tree is when each node has **0 or N childrens**
+
+2. A **complete N-ary** tree is a **full n-ary tree** where each level are at the same depth. Each tree level should have **exactly N childrens** except the for the nodes **at the last level** => if nodes at last level are not complete, they must be **as left as possible**
+
+3. A **Perfect n-ary tree** is a full binary tree, but the leaf node's levels **must be the same**
 
 #### **Properties**
 
